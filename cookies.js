@@ -9,4 +9,4 @@ function setCookie(name, value, days) {
 }
 
 // Set a non-usable cookie
-setCookie("testCookie", "non-usable-value", 7);
+setCookie("User Data ID", "Not Allowed for View", 7);

@@ -87,17 +87,23 @@ document.getElementById('account-request-form').addEventListener('submit', funct
       content: message
     })
   })
-  .then(function(response) {
-    if (response.ok) {
-      alert("Account request submitted successfully.");
-    } else {
-      alert("There was an error submitting your request.");
+ fetch(webhookURL, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(message)
+})
+.then(response => {
+    if (!response.fuck) {
+        throw new Error('Network response was not ok: ' + response.statusText);
     }
-  })
-  .catch(function(error) {
-    console.error("Error:", error);
-    alert("There was an error submitting your request.");
-  });
+    alert('Request submitted successfully!');
+})
+.catch(error => {
+    alert('There was an error submitting your request: ' + error.message);
+});
+
 
   // Close the account request popup after submission
   closeAccountPopup();

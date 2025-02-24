@@ -1,12 +1,14 @@
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+function hideCookieBanner() {
+  const dontShowAgain = document.getElementById("dont-show-again").checked;
+  if (dontShowAgain) {
+    localStorage.setItem("hideCookieBanner", "true");
+  }
+  document.getElementById("cookie-banner").style.display = "none";
 }
 
-// Set a non-usable cookie
-setCookie("User Data ID", "Not Allowed for View", 7);
+// Check if the banner should be hidden on page load
+window.onload = function() {
+  if (localStorage.getItem("hideCookieBanner") === "true") {
+    document.getElementById("cookie-banner").style.display = "none";
+  }
+};

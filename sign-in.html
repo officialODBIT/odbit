@@ -88,7 +88,7 @@
             margin-top: 10px;
         }
 
-        input[type="text"], input[type="password"], input[type="tel"] {
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -128,7 +128,7 @@
         }
 
         /* Popup */
-        .popup, .account-popup, .message-popup, .error-popup, .success-popup {
+        .popup, .message-popup, .error-popup, .success-popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -143,7 +143,7 @@
             z-index: 100;
         }
 
-        .popup button, .account-popup button, .message-popup button, .error-popup button, .success-popup button {
+        .popup button, .message-popup button, .error-popup button, .success-popup button {
             background-color: #FF0000;
             color: white;
             padding: 10px;
@@ -197,34 +197,15 @@
                 <button type="submit" class="submit-btn">Sign in</button>
                 <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
             </form>
+            <!-- Added version text below sign-in form -->
             <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
-            <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+ ODBIT &copy; 2025-2026. All rights reserved.</p>
         </div>
     </div>
 
     <div class="popup" id="popup">
         <p>Incorrect or not added to system</p>
         <button onclick="closePopup()">OK</button>
-    </div>
-
-    <div class="account-popup" id="account-popup">
-        <h2>Request an Account</h2>
-        <form id="account-request-form">
-            <label for="name">First/Last Name <span style="color: red;">*</span></label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="phone">Phone Number <span style="color: red;">*</span></label>
-            <input type="tel" id="phone" name="phone" required>
-
-            <label for="accountSpecID">SpecID <span style="color: red;">*</span></label>
-            <input type="text" id="accountSpecID" name="accountSpecID" required>
-
-            <label for="accountPIN">PIN <span style="color: red;">*</span></label>
-            <input type="password" id="accountPIN" name="accountPIN" required>
-
-            <button type="submit" class="submit-btn">Submit</button>
-            <button type="button" onclick="closeAccountPopup()">Cancel</button>
-        </form>
     </div>
 
     <div class="message-popup" id="message-popup">
@@ -245,13 +226,60 @@
         <p>Cases ongoing: (0)</p>
         <br><br>
         <p>Investigations ongoing: (0)</p>
-        <br><br>
+        <br><br> <!-- Added two line breaks for blank space -->
         <p>History: (43)</p>
-        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
+        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p> <!-- Added Archive link here -->
         <button onclick="closeSuccessPopup()">Close</button>
     </div>
 
-    <script src="main.js"></script>
+    <script>
+        function showPopup(message) {
+            var popup = document.getElementById('popup');
+            popup.querySelector('p').textContent = message;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.getElementById('sign-in-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var specID = document.getElementById('specID').value;
+            var pin = document.getElementById('pin').value;
+
+            // Check for the correct SpecID and PIN pairs
+            if ((specID === "495739672935" && pin === "6882") || 
+                (specID === "495629572819" && pin === "1396") ||
+                (specID === "495838492486" && pin === "19938") ||
+                (specID === "4925537503891" && pin === "13395")) {
+                document.getElementById('success-popup').style.display = 'block';
+            } else {
+                showPopup("Incorrect or not added to system");
+            }
+        });
+
+        function closeMessagePopup() {
+            document.getElementById('message-popup').style.display = 'none';
+        }
+
+        function requestAccount() {
+            document.getElementById('error-popup').style.display = 'block';
+        }
+
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('success-popup').style.display = 'none';
+        }
+
+        function togglePassword() {
+            var pinInput = document.getElementById("pin");
+            pinInput.type = pinInput.type === "password" ? "text" : "password";
+        }
+    </script>
 </body>
 </html>
-

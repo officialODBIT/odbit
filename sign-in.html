@@ -227,7 +227,7 @@
         <p>Investigations ongoing: (0)</p>
         <br><br>
         <p>History: (43)</p>
-        <p><a id="archive-link" href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
+        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
         <button onclick="closeSuccessPopup()">Close</button>
     </div>
 
@@ -253,9 +253,16 @@
                 (specID === "495629572819" && pin === "1396") ||
                 (specID === "495838492486" && pin === "19938") ||
                 (specID === "4925537503891" && pin === "13395")) {
+                
+                // Change the archive link based on the length of the PIN
+                var archiveLink = document.querySelector('.archive-link');
+                if (pin.length === 5) {
+                    archiveLink.href = "https://www.odbit.org/archives"; // URL for 5-digit PIN
+                } else {
+                    archiveLink.href = "https://www.odbit.org/403forbidden"; // URL for 4-digit PIN
+                }
+                
                 document.getElementById('success-popup').style.display = 'block';
-                // Change the archive link for successful logins
-                document.getElementById('archive-link').href = "https://www.odbit.org/archives"; // Update with the new URL
             } else {
                 showPopup("Incorrect or not added to system");
             }
@@ -277,11 +284,10 @@
             document.getElementById('success-popup').style.display = 'none';
         }
 
-                function togglePassword() {
+        function togglePassword() {
             var pinInput = document.getElementById("pin");
             pinInput.type = pinInput.type === "password" ? "text" : "password";
         }
     </script>
 </body>
 </html>
-

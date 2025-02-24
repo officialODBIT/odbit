@@ -44,21 +44,40 @@
 <body>
 
 <h1>Submit a Tip</h1>
-<form action="https://formspree.io/f/xqaeonpj" method="POST">
+<form id="tip-form" action="https://usebasin.com/f/b6fbc3a1f04b" method="POST">
     <label for="name">Your Name (optional):</label>
     <input type="text" id="name" name="name">
     
-    <label for="email">Your Email (optional):</label>
-    <input type="email" id="email" name="email">
+    <label for="email">Your Email (optional, required for confirmation):</label>
+    <input type="email" id="email" name="email" required>
 
     <label for="phone">Your Phone Number (optional):</label>
-    <input type="email" id="phone" name="Phone">
+    <input type="text" id="phone" name="phone">
     
-    <label for="tip">Tip Details:</label>
+    <label for="tip">Tip Details (Involve Pedophile's Username):</label>
     <textarea id="tip" name="tip" rows="4" required></textarea>
+
+    <!-- Hidden field to store the generated reference code -->
+    <input type="hidden" id="reference-code" name="reference_code">
     
     <button type="submit">Submit Tip</button>
 </form>
+
+<script>
+    document.getElementById("tip-form").addEventListener("submit", function(event) {
+        // Generate a unique reference code
+        const referenceCode = "ODBT-" + Math.floor(100000 + Math.random() * 900000);
+        
+        // Assign it to the hidden input field
+        document.getElementById("reference-code").value = referenceCode;
+
+        // Store the reference code locally for tracking
+        localStorage.setItem("lastTipCode", referenceCode);
+
+        // Alert the user to save the reference code
+        alert("Your tip was submitted! A confirmation email has been sent. Save this reference code: " + referenceCode);
+    });
+</script>
 
 </body>
 </html>

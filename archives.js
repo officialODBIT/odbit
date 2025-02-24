@@ -1,65 +1,91 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Create and style the body
-    document.body.style.fontFamily = "Arial, sans-serif";
-    document.body.style.margin = "20px";
-
-    // Create the heading
-    const heading = document.createElement("h1");
-    heading.textContent = "Username Search";
-    document.body.appendChild(heading);
-
-    // Create the search bar
-    const searchBar = document.createElement("input");
-    searchBar.type = "text";
-    searchBar.id = "searchBar";
-    searchBar.placeholder = "Search for usernames...";
-    searchBar.style.marginBottom = "20px";
-    searchBar.style.padding = "10px";
-    searchBar.style.width = "100%";
-    searchBar.style.boxSizing = "border-box";
-    document.body.appendChild(searchBar);
-
-    // Create the username list
-    const usernameList = document.createElement("ul");
-    usernameList.id = "usernameList";
-    usernameList.style.listStyleType = "none";
-    usernameList.style.padding = "0";
-    document.body.appendChild(usernameList);
-
-    // Usernames array
-    const usernames = [
-        "hnj_mvg", "Aridov", "crsh51", "KianaC3013", "bauerHUESOS", "Adamahm201", 
-        "Docdubk6", "kallistarosegc", "gatinhol173917", "sonsmyboyMOM", "aga_rrrin", 
-        "anqeliitve", "robloxboy213450", "ITS_TIA250", "Tuckelsa10", "colourrelar", 
-        "WealthyInfluncers", "frodik6", "BigShotMatthew", "KING_DEMON626", "Bbcgoal", 
-        "lita_hoshi", "Purple_Dragon321", "thatonlyjj", "alicep81u7", "pingfrog06", 
-        "PinkPanther02016", "rayraytheboss777", "25Alice1", "roachspraybeach", 
-        "mirellaq04", "Angelbona_0", "thedogiscute_910", "Xxendgamer_xX", 
-        "Aailyah2008", "cammeryo"
-    ];
-
-    // Populate the list with usernames
-    usernames.forEach(username => {
-        const li = document.createElement("li");
-        li.textContent = username;
-        li.style.padding = "8px";
-        li.style.border = "1px solid #ccc";
-        li.style.marginBottom = "5px";
-        li.style.borderRadius = "5px";
-        usernameList.appendChild(li);
-    });
-
-    // Search filter function
-    function filterUsernames() {
-        const filter = searchBar.value.toLowerCase();
-        const listItems = usernameList.getElementsByTagName("li");
-
-        for (let i = 0; i < listItems.length; i++) {
-            const username = listItems[i].textContent || listItems[i].innerText;
-            listItems[i].style.display = username.toLowerCase().includes(filter) ? "" : "none";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usernames Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-    }
+        #searchBar {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #usernameList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #usernameList li {
+            padding: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Username Search</h1>
+    <input type="text" id="searchBar" placeholder="Search for usernames..." onkeyup="filterUsernames()">
 
-    // Attach event listener to the search bar
-    searchBar.addEventListener("keyup", filterUsernames);
-});
+    <ul id="usernameList">
+        <li>hnj_mvg</li>
+        <li>Aridov</li>
+        <li>crsh51</li>
+        <li>KianaC3013</li>
+        <li>bauerHUESOS</li>
+        <li>Adamahm201</li>
+        <li>Docdubk6</li>
+        <li>kallistarosegc</li>
+        <li>gatinhol173917</li>
+        <li>sonsmyboyMOM</li>
+        <li>aga_rrrin</li>
+        <li>anqeliitve</li>
+        <li>robloxboy213450</li>
+        <li>ITS_TIA250</li>
+        <li>Tuckelsa10</li>
+        <li>colourrelar</li>
+        <li>WealthyInfluncers</li>
+        <li>frodik6</li>
+        <li>BigShotMatthew</li>
+        <li>KING_DEMON626</li>
+        <li>Bbcgoal</li>
+        <li>lita_hoshi</li>
+        <li>Purple_Dragon321</li>
+        <li>thatonlyjj</li>
+        <li>alicep81u7</li>
+        <li>pingfrog06</li>
+        <li>PinkPanther02016</li>
+        <li>rayraytheboss777</li>
+        <li>25Alice1</li>
+        <li>roachspraybeach</li>
+        <li>mirellaq04</li>
+        <li>Angelbona_0</li>
+        <li>thedogiscute_910</li>
+        <li>Xxendgamer_xX</li>
+        <li>Aailyah2008</li>
+        <li>cammeryo</li>
+    </ul>
+
+    <script>
+        function filterUsernames() {
+            const searchBar = document.getElementById("searchBar");
+            const filter = searchBar.value.toLowerCase();
+            const usernameList = document.getElementById("usernameList");
+            const usernames = usernameList.getElementsByTagName("li");
+
+            for (let i = 0; i < usernames.length; i++) {
+                const username = usernames[i].textContent || usernames[i].innerText;
+                if (username.toLowerCase().indexOf(filter) > -1) {
+                    usernames[i].style.display = "";
+                } else {
+                    usernames[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

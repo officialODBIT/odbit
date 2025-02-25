@@ -12,6 +12,17 @@
             padding: 0;
         }
 
+        .banner {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .header {
             background-color: #001a33;
             color: white;
@@ -54,7 +65,7 @@
             margin-top: 10px;
         }
 
-        input[type="text"], input[type="email"], input[type="password"] {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -74,15 +85,13 @@
             background-color: #050d57;
             color: white;
         }
-
-        .message {
-            margin-top: 20px;
-            color: green;
-            display: none;
-        }
     </style>
 </head>
 <body>
+
+    <div class="banner">
+        Official ODBIT Sign-Up Portal
+    </div>
 
     <div class="header">
         <h1>ODBIT - Sign Up</h1>
@@ -90,11 +99,8 @@
 
     <div class="form-container">
         <div class="form-content">
-            <h2>Create an Account</h2>
+            <h2>Create Your Account</h2>
             <form id="sign-up-form">
-                <label for="username">Username <span style="color: red;">*</span></label>
-                <input type="text" id="username" name="username" required>
-
                 <label for="email">Email <span style="color: red;">*</span></label>
                 <input type="email" id="email" name="email" required>
 
@@ -103,20 +109,33 @@
 
                 <button type="submit" class="submit-btn">Sign Up</button>
             </form>
-            <p class="message" id="message">Account created successfully!</p>
-            <p>Already have an account? <a href="https://www.odbit.org/signin">Sign In</a></p>
+            <p style="margin-top: 20px; font-size: 16px; color: #003366;">Already have an account? <a href="signin.html">Sign In</a></p>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
     <script>
-        document.getElementById('sign-up-form').addEventListener('submit', function(event) {
+        const supabaseUrl = 'https://oigwvtfxwicwtqmemogq.supabase.co';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your actual key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('sign-up-form').addEventListener('submit', async function(event) {
             event.preventDefault();
 
-            // You can add your form submission logic here (e.g., sending data to a server)
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-            // Display success message
-            document.getElementById('message').style.display = 'block';
-            document.getElementById('sign-up-form').reset(); // Reset the form
+            const { user, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                alert('Account created successfully! Please check your email for verification.');
+                window.location.href = "signin.html"; // Redirect to sign-in page
+            }
         });
     </script>
 </body>

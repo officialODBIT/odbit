@@ -4,23 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifications</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="notifications.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
+        }
+        .notification-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .notification {
+            background: #fffae6;
+            padding: 10px;
+            border-left: 4px solid #f1c40f;
+            margin-bottom: 10px;
+        }
+        .hidden { display: none; }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="banner">Important Announcement Here</div>
-    <div class="header">
-        <h1>Notifications</h1>
+
+<div class="notification-container">
+    <h2>Site Notifications</h2>
+    <div id="notifications"></div>
+</div>
+
+<!-- Admin Section -->
+<div class="notification-container">
+    <h3>Admin Login (14-digit PIN required)</h3>  <!-- Fake 14-digit PIN requirement -->
+    <input type="text" id="pin" placeholder="Enter 14-digit PIN">
+    <button onclick="checkLogin()">Login</button>
+    
+    <div id="admin-panel" class="hidden">
+        <h3>Post a Notification</h3>
+        <textarea id="notification-text" placeholder="Enter your notification..."></textarea>
+        <button onclick="addNotification()">Submit Notification</button>
     </div>
-    <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="notifications.html">Notifications</a>
-    </div>
-    <div class="content">
-        <div class="about-text">
-            <h2>Recent Notifications</h2>
-            <ul id="notifications-list"></ul>
-        </div>
-    </div>
+</div>
+
+<script>
+    const ADMIN_PIN = "13395";  // Only this PIN allows notifications
+    let hasPosted = sessionStorage.getItem("hasPosted") === "true"; // Track if notification is posted
+
+    function checkLogin() {
+        let pin = document.getElementById("pin").value;
+        if (pin === ADMIN_PIN) {
+            document.getElementById("admin-panel").classList.remove("hidden");
+            alert("Admin access granted.");
+        } else {
+            alert("Invalid PIN. Access denied.");
+        }
+    }
+
+    function addNotification() {
+        if (hasPosted) {
+            alert("You have already posted a notification this session.");
+            return;
+        }
+
+        let text = document.getElementById("notification-text").value.trim();
+        if (!text) {
+            alert("Notification cannot be empty.");
+            return;
+        }
+
+        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+        let expiration = Date.now() + (14 * 24 * 60 * 60 * 1000); // 14 days
+
+        notifications.push({ text, expiration });
+        localStorage.setItem("notifications", JSON.stringify(notifications));
+
+        sessionStorage.setItem("hasPosted", "true"); // Prevent another notification this session
+        hasPosted = true;
+
+        document.getElementById("notification-text").value = "";
+        alert("Notification added!");
+        displayNotifications();
+    }
+
+    function displayNotifications() {
+        let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+        let now = Date.now();
+
+        // Remove expired notifications
+        notifications = notifications.filter(n => n.expiration > now);
+        localStorage.setItem("notifications", JSON.stringify(notifications));
+
+        let container = document.getElementById("notifications");
+        container.innerHTML = notifications.length ? 
+            notifications.map(n => `<div class="notification">${n.text}</div>`).join("") 
+            : "<p>No notifications.</p>";
+    }
+
+    // Load notifications on page load
+    displayNotifications();
+</script>
+
 </body>
 </html>

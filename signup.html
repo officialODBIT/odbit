@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODBIT - Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #001a33;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .form-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #003366;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: #050d57;
+            color: white;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>ODBIT - Sign Up</h1>
+    </div>
+
+    <div class="form-container">
+        <div class="form-content">
+            <h2>Create an Account</h2>
+            <form id="sign-up-form">
+                <label for="username">Username <span style="color: red;">*</span></label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email <span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password <span style="color: red;">*</span></label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+            <p class="message" id="message">Account created successfully!</p>
+            <p>Already have an account? <a href="https://www.odbit.org/signin">Sign In</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sign-up-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // You can add your form submission logic here (e.g., sending data to a server)
+
+            // Display success message
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('sign-up-form').reset(); // Reset the form
+        });
+    </script>
+</body>
+</html>

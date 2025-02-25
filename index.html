@@ -17,6 +17,34 @@
             text-align: center;
             border-top: 1px solid #f5c6cb;
         }
+        /* Style for the pop-up */
+        #error-popup {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid red;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #error-code {
+            font-size: 48px; /* Big bold size */
+            color: red; /* Red color */
+            font-weight: bold; /* Bold text */
+        }
+        #overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            z-index: 999; /* Just below the pop-up */
+        }
     </style>
 </head>
 <body>
@@ -41,28 +69,24 @@
         <div class="about-text">
             <h2>About ODBIT</h2>
             <p>ODBIT (Online Dater Bureau of Investigation Team) is a dedicated organization within the ROBLOX community, committed to identifying and reporting individuals who violate both ROBLOX’s Terms of Service and real-world laws. Our primary mission is to create a safer online environment by taking action against serious offenders, including pedophiles, sex offenders, and individuals engaging in predatory behavior.</p>
-      
-      <p>As an active force within the ROBLOX platform, ODBIT members work diligently to monitor, investigate, and report any violations to the appropriate authorities, whether that be ROBLOX moderators or legal entities when necessary. While ROBLOX is our primary focus, our efforts may extend to other online platforms where such harmful activities occur.</p>
-      
-      <p>Founded by Evan Sakers and co-founded by Jero, ODBIT operates as a team of highly dedicated individuals who share a common goal: protecting the safety and integrity of the online gaming community. Due to privacy concerns, other co-founders and key members will not be publicly disclosed.</p>
-      
-      <p>At ODBIT, we believe in the importance of vigilance and community awareness. By working together, we strive to create a gaming space where all users, especially minors, can interact without fear of exploitation or harm. Our mission is ongoing, and we remain steadfast in our pursuit of justice within the digital world.</p>
-      
-      <p>ODBIT’s efforts also extend to educating the community about online safety and helping users recognize the signs of predatory behavior. We aim to empower the ROBLOX community to protect themselves and others from potential harm.</p>
-      
-      <p>We believe that working together as a community is crucial to creating a safer online space for everyone. The members of ODBIT continue to dedicate their time and resources to this cause, ensuring that the online environment is safe, secure, and enjoyable for all users, regardless of age or background.</p>
-
-      <p>As our mission grows, we continue to build relationships with various online platforms to promote a safer environment for users worldwide. We understand that online safety is an ongoing concern, and we strive to stay ahead of potential threats by constantly evolving our strategies and technologies.</p>
-
-      <p>Our community of volunteers is one of our greatest assets. These members contribute their time, knowledge, and skills to further our cause, ensuring that no stone is left unturned in the fight against online predators. Our dedication to this mission has been a driving force behind the growth and success of ODBIT.</p>
-
-      <p>In addition to investigating harmful online behavior, we also strive to foster a positive and supportive environment within the ROBLOX community. We encourage players to report any suspicious activity, share safety tips, and provide support to those who may have experienced or witnessed harmful behavior.</p>
-
-      <p>While our focus will always be on protecting users from dangerous individuals, we also strive to make sure that everyone feels safe while enjoying their time in the online gaming world. This commitment to safety, alongside our ongoing investigations and reports, is what sets ODBIT apart in the fight against online exploitation.</p>
-
-      <p>Thank you for supporting ODBIT. Together, we can create a safer, more enjoyable online experience for everyone. We invite you to join us in our mission to protect users and ensure the integrity of the ROBLOX platform.</p>
-      <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+            <p>As an active force within the ROBLOX platform, ODBIT members work diligently to monitor, investigate, and report any violations to the appropriate authorities, whether that be ROBLOX moderators or legal entities when necessary. While ROBLOX is our primary focus, our efforts may extend to other online platforms where such harmful activities occur.</p>
+            <p>Founded by Evan Sakers and co-founded by Jero, ODBIT operates as a team of highly dedicated individuals who share a common goal: protecting the safety and integrity of the online gaming community. Due to privacy concerns, other co-founders and key members will not be publicly disclosed.</p>
+            <p>At ODBIT, we believe in the importance of vigilance and community awareness. By working together, we strive to create a gaming space where all users, especially minors, can interact without fear of exploitation or harm. Our mission is ongoing, and we remain steadfast in our pursuit of justice within the digital world.</p>
+            <p>ODBIT’s efforts also extend to educating the community about online safety and helping users recognize the signs of predatory behavior. We aim to empower the ROBLOX community to protect themselves and others from potential harm.</p>
+            <p>We believe that working together as a community is crucial to creating a safer online space for everyone. The members of ODBIT continue to dedicate their time and resources to this cause, ensuring that the online environment is safe, secure, and enjoyable for all users, regardless of age or background.</p>
+            <p>As our mission grows, we continue to build relationships with various online platforms to promote a safer environment for users worldwide. We understand that online safety is an ongoing concern, and we strive to stay ahead of potential threats by constantly evolving our strategies and technologies.</p>
+            <p>Our community of volunteers is one of our greatest assets. These members contribute their time, knowledge, and skills to further our cause, ensuring that no stone is left unturned in the fight against online predators. Our dedication to this mission has been a driving force behind the growth and success of ODBIT.</p>
+            <p>In addition to investigating harmful online behavior, we also strive to foster a positive and supportive environment within the ROBLOX community. We encourage players to report any suspicious activity, share safety tips, and provide support to those who may have experienced or witnessed harmful behavior.</p>
+            <p>While our focus will always be on protecting users from dangerous individuals, we also strive to make sure that everyone feels safe while enjoying their time in the online gaming world. This commitment to safety, alongside our ongoing investigations and reports, is what sets ODBIT apart in the fight against online exploitation.</p>
+            <p>Thank you for supporting ODBIT. Together, we can create a safer, more enjoyable online experience for everyone. We invite you to join us in our mission to protect users and ensure the integrity of the ROBLOX platform.</p>
+            <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
         </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="error-popup">
+        <p>Servers have been temporarily shut down for unknown reasons. Please try again later<br> 
+        <span id="error-code">400</span> (error code 0_x00400)</p>
     </div>
 
     <div id="cookie-banner">
@@ -119,8 +143,16 @@
             }
         }
 
+        function showErrorPopup() {
+            document.getElementById("overlay").style.display = "block"; // Show overlay
+            document.getElementById("error-popup").style.display = "block"; // Show error pop-up
+        }
+
         // Call the function on page load
-        checkCookieConsent();
+        window.onload = function() {
+            checkCookieConsent();
+            showErrorPopup(); // Show the error pop-up when the page loads
+        };
     </script>
 </body>
 </html>

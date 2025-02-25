@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ODBIT - Sign In</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +13,6 @@
             padding: 0;
         }
 
-        /* Top Banner */
         .banner {
             background-color: #003366;
             color: white;
@@ -24,7 +24,6 @@
             box-sizing: border-box;
         }
 
-        /* Header */
         .header {
             background-color: #001a33;
             color: white;
@@ -37,7 +36,6 @@
             font-size: 40px;
         }
 
-        /* Navbar */
         .navbar {
             background-color: #001a33;
             overflow: hidden;
@@ -57,7 +55,6 @@
             color: black;
         }
 
-        /* Form Container */
         .form-container {
             display: flex;
             justify-content: center;
@@ -88,7 +85,7 @@
             margin-top: 10px;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], input[type="email"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -97,17 +94,7 @@
             font-size: 16px;
         }
 
-        .show-text {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .show-text input {
-            margin-right: 5px;
-        }
-
-        .submit-btn, .request-account {
+        .submit-btn {
             width: 100%;
             padding: 12px;
             margin-top: 10px;
@@ -115,20 +102,11 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 4px;
-        }
-
-        .submit-btn {
             background-color: #050d57;
             color: white;
         }
 
-        .request-account {
-            background-color: #050d57;
-            color: white;
-        }
-
-        /* Popup */
-        .popup, .message-popup, .error-popup, .success-popup {
+        .popup {
             display: none;
             position: fixed;
             top: 50%;
@@ -143,23 +121,13 @@
             z-index: 100;
         }
 
-        .popup button, .message-popup button, .error-popup button, .success-popup button {
+        .popup button {
             background-color: #FF0000;
             color: white;
             padding: 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-        }
-
-        .archive-link {
-            color: #001a33;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .archive-link:hover {
-            color: #ffcc00;
         }
     </style>
 </head>
@@ -178,62 +146,54 @@
         <a href="https://www.odbit.org/status">Status</a>
         <a href="https://www.odbit.org/tos">ToS</a>
         <a href="https://www.odbit.org/linksforuseodbit">Social</a>
+        <a href="https://www.odbit.org/signup">Sign Up</a>
     </div>
 
     <div class="form-container">
         <div class="form-content">
             <h2>Sign In</h2>
             <form id="sign-in-form">
-                <label for="specID">SpecID <span style="color: red;">*</span></label>
-                <input type="text" id="specID" name="specID" required>
+                <label for="email">Email <span style="color: red;">*</span></label>
+                <input type="email" id="email" name="email" required>
 
-                <label for="pin">PIN <span style="color: red;">*</span></label>
-                <input type="password" id="pin" name="pin" required>
+                <label for="password">Password <span style="color: red;">*</span></label>
+                <input type="password" id="password" name="password" required>
 
-                <div class="show-text">
-                    <input type="checkbox" id="show-password" onclick="togglePassword()"> <label for="show-password">Show Text</label>
-                </div>
-
-                <button type="submit" class="submit-btn">Sign in</button>
-                <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
+                <button type="submit" class="submit-btn">Sign In</button>
             </form>
-            <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
+            <p>v1.25.0.01 Beta Release</p>
             <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
         </div>
     </div>
 
     <div class="popup" id="popup">
-        <p>Incorrect or not added to system</p>
+        <p>Incorrect email or password</p>
         <button onclick="closePopup()">OK</button>
     </div>
 
-    <div class="message-popup" id="message-popup">
-        <p>No ongoing investigations</p>
-        <p>No ongoing cases</p>
-        <button onclick="closeMessagePopup()">Close</button>
-    </div>
-
-    <div class="error-popup" id="error-popup">
-        <p>Error 63 <br> 0_xx0002</p>
-        <p>Please try again later.</p>
-        <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
-        <button onclick="closeErrorPopup()">Close</button>
-    </div>
-
-    <div class="success-popup" id="success-popup">
-        <p>Info: This is a successful login attempt. Your session will last until closed or refreshed.</p>
-        <p>Cases ongoing: (0)</p>
-        <br><br>
-        <p>Investigations ongoing: (0)</p>
-        <br><br>
-        <p>History: (43)</p>
-        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
-        <button onclick="closeSuccessPopup()">Close</button>
-    </div>
-
     <script>
+        const supabaseUrl = 'https://oigwvtfxwicwtqmemogq.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pZ3d2dGZ4d2ljd3RxbWVtb2dxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NDk1NzgsImV4cCI6MjA1NjAyNTU3OH0.gQ-AEI9O8LXKOM1HIpikMOy_79zd06Jmoh6Ch-pA1Dg';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        document.getElementById('sign-in-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { user, error } = await supabase.auth.signIn({ email, password });
+
+            if (error) {
+                showPopup("Incorrect email or password");
+            } else {
+                // Handle successful sign-in (e.g., redirect to the dashboard)
+                window.location.href = "https://www.odbit.org/dashboard"; // Change this to your dashboard URL
+            }
+        });
+
         function showPopup(message) {
-            var popup = document.getElementById('popup');
+            const popup = document.getElementById('popup');
             popup.querySelector('p').textContent = message;
             popup.style.display = 'block';
         }
@@ -241,53 +201,7 @@
         function closePopup() {
             document.getElementById('popup').style.display = 'none';
         }
-
-        document.getElementById('sign-in-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var specID = document.getElementById('specID').value;
-            var pin = document.getElementById('pin').value;
-
-            // Check for the correct SpecID and PIN pairs
-            if ((specID === "495739672935" && pin === "6882") || 
-                (specID === "495629572819" && pin === "1396") ||
-                (specID === "495838492486" && pin === "19938") ||
-                (specID === "4925537503891" && pin === "13395")) {
-                
-                // Change the archive link based on the length of the PIN
-                var archiveLink = document.querySelector('.archive-link');
-                if (pin.length === 5) {
-                    archiveLink.href = "https://www.odbit.org/archives"; // URL for 5-digit PIN
-                } else {
-                    archiveLink.href = "https://www.odbit.org/403forbidden"; // URL for 4-digit PIN
-                }
-                
-                document.getElementById('success-popup').style.display = 'block';
-            } else {
-                showPopup("Incorrect or not added to system");
-            }
-        });
-
-        function closeMessagePopup() {
-            document.getElementById('message-popup').style.display = 'none';
-        }
-
-        function requestAccount() {
-            document.getElementById('error-popup').style.display = 'block';
-        }
-
-        function closeErrorPopup() {
-            document.getElementById('error-popup').style.display = 'none';
-        }
-
-        function closeSuccessPopup() {
-            document.getElementById('success-popup').style.display = 'none';
-        }
-
-        function togglePassword() {
-            var pinInput = document.getElementById("pin");
-            pinInput.type = pinInput.type === "password" ? "text" : "password";
-        }
     </script>
 </body>
 </html>
+

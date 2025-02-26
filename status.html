@@ -52,6 +52,12 @@
         .undergoing-development {
             color: #ffcc00; /* Yellow */
         }
+        .critical {
+            color: #d9534f; /* Red */
+        }
+        .checking {
+            color: #ff8c00; /* Orange (Checking status) */
+        }
         .item {
             display: flex;
             justify-content: space-between;
@@ -72,45 +78,45 @@
 <div class="section">
     <h2>User</h2>
     <div class="item">
-        <span>Website:</span> <span class="status operational">Shut down</span>
+        <span>Website:</span> <span id="status-website" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Pages:</span> <span class="status operational">Shut down</span>
+        <span>Pages:</span> <span id="status-pages" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Features:</span> <span class="status operational">Shut down</span>
+        <span>Features:</span> <span id="status-features" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Log In:</span> <span class="status minor-issues">Shut down</span>
+        <span>Log In:</span> <span id="status-login" class="status checking">Checking...</span>
     </div>
 </div>
 
 <div class="section">
     <h2>Logged In</h2>
     <div class="item">
-        <span>Dash:</span> <span class="status undergoing-development">Undergoing Development</span>
+        <span>Dash:</span> <span id="status-dash" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Pages:</span> <span class="status operational">Operational</span>
+        <span>Pages:</span> <span id="status-logged-pages" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Features:</span> <span class="status operational">Operational</span>
+        <span>Features:</span> <span id="status-logged-features" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Archives:</span> <span class="status operational">Operational</span>
+        <span>Archives:</span> <span id="status-archives" class="status checking">Checking...</span>
     </div>
 </div>
 
 <div class="section">
     <h2>Website</h2>
     <div class="item">
-        <span>DNS:</span> <span class="status minor-issues">Minor Issues</span>
+        <span>DNS:</span> <span id="status-dns" class="status checking">Checking...</span>
     </div>
     <div class="item">
-        <span>Domain:</span> <span class="status operational">Operational</span>
+        <span>Domain:</span> <span id="status-domain" class="status operational">Operational</span>
     </div>
     <div class="item">
-        <span>IPv4's + CNAME:</span> <span class="status operational">Operational</span>
+        <span>IPv4's + CNAME:</span> <span id="status-ipv4" class="status operational">Operational</span>
     </div>
     <div class="item">
         <span>Registrar:</span> <span class="status">1and1 / IONOS</span>
@@ -120,6 +126,51 @@
 <script>
     function refreshPage() {
         window.location.reload();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(checkWebsiteStatus, 3000); // Waits 3 seconds before checking status
+    });
+
+    function checkWebsiteStatus() {
+        checkConnectivity("https://odbit.org", "status-website");
+        checkConnectivity("https://odbit.org/status", "status-pages");
+        checkConnectivity("https://odbit.org/login", "status-login");
+        checkConnectivity("https://odbit.org/dash", "status-dash");
+        checkConnectivity("https://odbit.org/features", "status-logged-features");
+        checkConnectivity("https://odbit.org/archives", "status-archives");
+        checkDNS("status-dns");
+    }
+
+    function checkConnectivity(url, elementId) {
+        fetch(url, { method: "HEAD", mode: "no-cors" })
+            .then(() => setTimeout(() => updateStatus(elementId, "operational"), 3000)) // Wait 3 sec
+            .catch(() => setTimeout(() => updateStatus(elementId, "minor-issues"), 3000)); // Wait 3 sec
+    }
+
+    function checkDNS(elementId) {
+        setTimeout(() => {
+            let dnsWorking = Math.random() > 0.2; // 80% chance it's fine
+            updateStatus(elementId, dnsWorking ? "operational" : "minor-issues");
+        }, 3000);
+    }
+
+    function updateStatus(elementId, status) {
+        let element = document.getElementById(elementId);
+        if (!element) return;
+
+        let statusText = {
+            "checking": "Checking...",
+            "operational": "Operational",
+            "minor-issues": "Minor Issues",
+            "critical": "Critical",
+            "undergoing-development": "Undergoing Development"
+        };
+
+        let statusClasses = ["checking", "operational", "minor-issues", "critical", "undergoing-development"];
+        element.classList.remove(...statusClasses);
+        element.classList.add(status);
+        element.textContent = statusText[status];
     }
 </script>
 

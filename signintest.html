@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ODBIT - Sign In</title>
     <style>
+        /* Your existing styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f1f1f1;
@@ -12,6 +13,7 @@
             padding: 0;
         }
 
+        /* Top Banner */
         .banner {
             background-color: #003366;
             color: white;
@@ -23,6 +25,7 @@
             box-sizing: border-box;
         }
 
+        /* Header */
         .header {
             background-color: #001a33;
             color: white;
@@ -35,6 +38,7 @@
             font-size: 40px;
         }
 
+        /* Navbar */
         .navbar {
             background-color: #001a33;
             overflow: hidden;
@@ -54,6 +58,7 @@
             color: black;
         }
 
+        /* Form Container */
         .form-container {
             display: flex;
             justify-content: center;
@@ -123,6 +128,7 @@
             color: white;
         }
 
+        /* Popup */
         .popup {
             display: none;
             position: fixed;
@@ -145,16 +151,6 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-        }
-
-        .archive-link {
-            color: #001a33;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .archive-link:hover {
-            color: #ffcc00;
         }
     </style>
 </head>
@@ -202,7 +198,6 @@
         <button onclick="closePopup()">OK</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
         // Initialize Supabase client
         const { createClient } = supabase;
@@ -218,7 +213,7 @@
 
             // Check credentials in Supabase
             const { data, error } = await supabase
-                .from('accounts') // Using 'accounts' as the table name
+                .from('accounts') // Your actual table name
                 .select('id')
                 .eq('specID', specID)
                 .eq('pin', pin)
@@ -228,7 +223,8 @@
                 showPopup("Incorrect or not added to system");
             } else {
                 // Login successful
-                document.getElementById('success-popup').style.display = 'block'; // You may want to show a success message or redirect
+                localStorage.setItem('loggedIn', 'true'); // Set the flag on successful login
+                window.location.href = "https://www.odbit.org/dashboard"; // Redirect to dashboard
             }
         });
 

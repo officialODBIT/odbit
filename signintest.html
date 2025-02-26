@@ -193,12 +193,12 @@
         <button onclick="closePopup()">OK</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
         // Initialize Supabase client
         const supabaseUrl = 'https://iiawfqwtbnessypyohfb.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlpYXdmcXd0Ym5lc3N5cHlvaGZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1Mzc1NTksImV4cCI6MjA1NjExMzU1OX0.68WYw_cDHehb4bV2se91y9qZS4YtMeqlsLBA28UUHqQ';
-        const { createClient } = supabase;
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         document.getElementById('sign-in-form').addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -230,6 +230,12 @@
         function togglePassword() {
             const pinInput = document.getElementById("pin");
             pinInput.type = pinInput.type === "password" ? "text" : "password";
+        }
+
+        function showPopup(message) {
+            const popup = document.getElementById('popup');
+            popup.querySelector('p').innerText = message;
+            popup.style.display = 'block';
         }
     </script>
 </body>

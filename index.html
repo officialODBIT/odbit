@@ -45,6 +45,51 @@
             background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
             z-index: 999; /* Just below the pop-up */
         }
+
+        /* Changelog Styles */
+        #changelog-popup {
+            display: block; /* Show when page loads */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            width: 50%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .changelog-content h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .changelog-content ul {
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .changelog-content li {
+            margin-bottom: 10px;
+        }
+
+        .changelog-content button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .changelog-content button:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +132,23 @@
     <div id="error-popup">
         <p>Servers have been temporarily shut down to make things better. Please try again later<br> 
         <span id="error-code">400</span> error code 0_x00400<br>400 Bad Request</p>
+    </div>
+
+    <!-- Changelog Popup -->
+    <div id="changelog-popup">
+        <div class="changelog-content">
+            <h2>Changelog v1.25.0.01 Release</h2>
+            <ul>
+                <li><strong>Updated Status Page 📜:</strong> The status page has been updated so that the new status page actually works, and when an error is detected, it will display the output status, allowing automation and making things easier for Web Dev Staff (WDS). <a href="https://odbit.org/status" target="_blank">View Status Page</a></li>
+                <li><strong>Backend Servers Coming Soon 🔐:</strong> ODBIT will have a more secure way of entering sensitive info when logging into the dashboard. We will continue to work on using Supabase to help out on our servers to authenticate easier.</li>
+                <li><strong>Site Back Up 🛜:</strong> The site was temporarily down due to sensitive information possibly being shown on our website. The site is back up and functioning properly, with no detected errors. If there are any errors, go to <a href="https://odbit.org/tip" target="_blank">Submit a Tip</a> or check the <a href="https://odbit.org/status" target="_blank">Status Page</a>.</li>
+            </ul>
+            <div>
+                <input type="checkbox" id="dont-show-again" />
+                <label for="dont-show-again">Don't show again</label>
+            </div>
+            <button onclick="closeChangelog()">Close</button>
+        </div>
     </div>
 
     <div id="cookie-banner">
@@ -148,10 +210,21 @@
             document.getElementById("error-popup").style.display = "block"; // Show error pop-up
         }
 
-        // Call the function on page load
+        function closeChangelog() {
+            if (document.getElementById("dont-show-again").checked) {
+                setCookie("changelogShown", "true", 365); // Set cookie for 1 year
+            }
+            document.getElementById("changelog-popup").style.display = "none";
+        }
+
+        // Check if the changelog has been shown before
         window.onload = function() {
             checkCookieConsent();
-             // Show the error pop-up when the page loads = showPopupError();
+            if (getCookie("changelogShown") === "true") {
+                document.getElementById("changelog-popup").style.display = "none"; // Hide if already shown
+            } else {
+                document.getElementById("changelog-popup").style.display = "block"; // Show if not shown
+            }
         };
     </script>
 </body>

@@ -58,7 +58,7 @@
         .news-box {
             width: 80%;
             max-width: 600px;
-            margin: 50px auto;
+            margin: 20px auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -90,6 +90,9 @@
             transform: scale(1.05);
         }
     </style>
+    <!-- Include PocketBase -->
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+    <script defer src="news.js"></script>
 </head>
 <body>
     <div class="banner">This is an official ODBIT related element.</div>
@@ -103,13 +106,8 @@
         <a href="https://www.odbit.org/tos">TOS</a>
         <a href="https://www.odbit.org/linksforuseodbit">Social</a>
     </div>
-    <div class="content">
-        <div class="news-box">
-            <h2>What Happened</h2>
-            <p>By Evan Sakers, Founder and CEO</p>
-            <p>February 23rd, 2025</p>
-            <button class="news-btn" onclick="window.open('https://www.odbit.org/newspost1', '_blank')">Read More</button>
-        </div>
+    <div class="content" id="news-container">
+        <!-- News articles will load here -->
     </div>
 </body>
 </html>

@@ -156,7 +156,7 @@
             <h2>What Happened</h2>
             <p>By Evan Sakers, Founder and CEO</p>
             <p>February 23rd, 2025</p>
-            <button class="news-btn" onclick="openPopup()">Read More</button>
+            <button class="news-btn" onclick="openPopup('What Happened', 'Here is the detailed content of the news article.')">Read More</button>
         </div>
     </div>
 
@@ -166,12 +166,42 @@
     <!-- Popup content -->
     <div class="popup" id="popup">
         <button class="close" onclick="closePopup()">X</button>
-        <h2>What Happened</h2>
-        <p>Here is the detailed content of the news article. You can add more information here.</p>
+        <h2 id="popupTitle">Title</h2>
+        <p id="popupContent">Content goes here.</p>
     </div>
 
+    <script src="https://cdn.pocketbase.io/v0.8.0/pocketbase.min.js"></script>
     <script>
-        function openPopup() {
+        const pb = new PocketBase('http://127.0.0.1:8090');
+
+        async function loadNews() {
+            try {
+                // Fetch news records from PocketBase
+                const records = await pb.collection('news').getFullList({
+                    sort: '-date'
+                });
+
+                // Populate news boxes dynamically
+                const newsContainer = document.querySelector('.content');
+                records.forEach(record => {
+                    const newsBox = document.createElement('div');
+                    newsBox.className = 'news-box';
+                    newsBox.innerHTML = `
+                        <h2>${record.title}</h2>
+                        <p>By ${record.author}</p>
+                        <p>${record.date}</p>
+                        <button class="news-btn" onclick="openPopup('${record.title}', '${record.content}')">Read More</button>
+                    `;
+                    newsContainer.appendChild(newsBox);
+                });
+            } catch (error) {
+                console.error('Error loading news:', error);
+            }
+        }
+
+        function openPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
             document.getElementById('popup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
@@ -183,6 +213,9 @@
 
         // Close the popup if the overlay is clicked
         document.getElementById('overlay').addEventListener('click', closePopup);
+
+        // Load news when the page is loaded
+        window.onload = loadNews;
     </script>
 </body>
 </html>

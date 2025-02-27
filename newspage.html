@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ODBIT - News</title>
     <style>
+        /* Your existing styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f1f1f1;
@@ -12,188 +13,73 @@
             padding: 0;
             text-align: center;
         }
-        .banner {
-            background-color: #ffcc00;
-            color: black;
-            text-align: left;
-            padding: 4px 10px;
-            font-size: 14px;
-            font-weight: bold;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .header {
-            background-color: #003366;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 40px;
-        }
-        .navbar {
-            background-color: #001a33;
-            overflow: hidden;
-            padding: 10px 0;
-        }
-        .navbar a {
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 18px;
-        }
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
         .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             padding: 20px;
         }
         .news-box {
-            width: 80%;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            border: 2px solid #ffcc00;
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ccc;
         }
-        .news-box h2 {
-            margin: 0;
-            color: #003366;
-        }
-        .news-box p {
-            font-size: 16px;
-            color: #555;
-        }
-        .news-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #ffcc00;
-            color: black;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .news-btn:hover {
-            background-color: #e6b800;
-            transform: scale(1.05);
-        }
-
-        /* Popup styles */
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 2px solid #ffcc00;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            padding: 20px;
-            max-width: 90%;
-            width: 400px;
-            text-align: left;
-        }
-        .popup h2 {
-            margin-top: 0;
-            color: #003366;
-        }
-        .popup p {
-            color: #555;
-        }
-        .popup .close {
-            background-color: #ffcc00;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            float: right;
-            margin-top: -10px;
-        }
-        .popup .close:hover {
-            background-color: #e6b800;
-        }
-        .overlay {
+        /* Popup Styles */
+        #overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            z-index: 20;
         }
     </style>
 </head>
 <body>
-    <div class="banner">This is an official ODBIT related element.</div>
-    <div class="header">
-        <h1>ODBIT - Online Dater Bureau of Investigation Team</h1>
-    </div>
-    <div class="navbar">
-        <a href="https://www.odbit.org/home">Home</a>
-        <a href="https://www.odbit.org/sign-in">Sign In</a>
-        <a href="https://www.odbit.org/status">Status</a>
-        <a href="https://www.odbit.org/tos">TOS</a>
-        <a href="https://www.odbit.org/linksforuseodbit">Social</a>
-    </div>
     <div class="content">
-        <div class="news-box">
-            <h2>What Happened</h2>
-            <p>By Evan Sakers, Founder and CEO</p>
-            <p>February 23rd, 2025</p>
-            <button class="news-btn" onclick="openPopup('What Happened', 'Here is the detailed content of the news article.')">Read More</button>
-        </div>
+        <!-- News boxes will be inserted here -->
     </div>
 
-    <!-- Overlay for the popup -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Popup content -->
-    <div class="popup" id="popup">
-        <button class="close" onclick="closePopup()">X</button>
-        <h2 id="popupTitle">Title</h2>
-        <p id="popupContent">Content goes here.</p>
+    <div id="overlay"></div>
+    <div id="popup">
+        <h2 id="popupTitle"></h2>
+        <p id="popupContent"></p>
+        <button onclick="closePopup()">Close</button>
     </div>
 
-    <script src="https://cdn.pocketbase.io/v0.8.0/pocketbase.min.js"></script>
     <script>
-        const pb = new PocketBase('http://127.0.0.1:8090');
+        const baseUrl = 'http://127.0.0.1:8090/api/collections/news/records';
 
         async function loadNews() {
             try {
-                // Fetch news records from PocketBase
-                const records = await pb.collection('news').getFullList({
-                    sort: '-date'
-                });
+                const response = await fetch(`${baseUrl}?page=1&perPage=500&sort=-date`);
+                const data = await response.json();
 
-                // Populate news boxes dynamically
-                const newsContainer = document.querySelector('.content');
-                records.forEach(record => {
-                    const newsBox = document.createElement('div');
-                    newsBox.className = 'news-box';
-                    newsBox.innerHTML = `
-                        <h2>${record.title}</h2>
-                        <p>By ${record.author}</p>
-                        <p>${record.date}</p>
-                        <button class="news-btn" onclick="openPopup('${record.title}', '${record.content}')">Read More</button>
-                    `;
-                    newsContainer.appendChild(newsBox);
-                });
+                if (response.ok) {
+                    const records = data.items;
+                    const newsContainer = document.querySelector('.content');
+                    records.forEach(record => {
+                        const newsBox = document.createElement('div');
+                        newsBox.className = 'news-box';
+                        newsBox.innerHTML = `
+                            <h2>${record.title}</h2>
+                            <button onclick="openPopup('${record.title}', '${record.content}')">Read More</button>
+                        `;
+                        newsContainer.appendChild(newsBox);
+                    });
+                } else {
+                    console.error('Error loading news:', data);
+                }
             } catch (error) {
                 console.error('Error loading news:', error);
             }
@@ -211,10 +97,6 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-        // Close the popup if the overlay is clicked
-        document.getElementById('overlay').addEventListener('click', closePopup);
-
-        // Load news when the page is loaded
         window.onload = loadNews;
     </script>
 </body>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispatch Center</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c0c0c0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 350px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input, select, button {
+            margin-top: 5px;
+            padding: 8px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        button {
+            background: #0078D7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005a9e;
+        }
+
+        /* Custom Pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: white;
+            border: 2px solid black;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .popup h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            background: gray;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>2009 Dispatch System</h2>
+        <form id="dispatchForm">
+            <label>Unit Name:</label>
+            <input type="text" id="unitName" required>
+
+            <label>Code:</label>
+            <select id="code">
+                <option value="Yellow">Yellow</option>
+                <option value="Orange">Orange</option>
+                <option value="Red">Red</option>
+                <option value="Black">Black</option>
+            </select>
+
+            <label>Game:</label>
+            <input type="text" id="game" required>
+
+            <label>Units:</label>
+            <select id="unitType">
+                <option value="Lieutenant">Lieutenant</option>
+                <option value="PED Control">PED Control</option>
+                <option value="Manager">Manager</option>
+                <option value="Lead Manager">Lead Manager</option>
+                <option value="Chief">Chief</option>
+                <option value="Sergeant">Sergeant</option>
+                <option value="CEOs">CEOs</option>
+            </select>
+
+            <label>DGL (Incident Location):</label>
+            <input type="text" id="dgl" required>
+
+            <label>Dispatcher Signature:</label>
+            <input type="text" id="sig" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Custom Pop-up -->
+    <div id="popup" class="popup">
+        <h3>Unit created. Units on the way.</h3>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    <script>
+        document.getElementById("dispatchForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Collect form data
+            const unitName = document.getElementById("unitName").value;
+            const code = document.getElementById("code").value;
+            const game = document.getElementById("game").value;
+            const unitType = document.getElementById("unitType").value;
+            const dgl = document.getElementById("dgl").value;
+            const sig = document.getElementById("sig").value;
+
+            // Show pop-up
+            document.getElementById("popup").style.display = "block";
+
+            // Send data to Discord webhook
+            const webhookURL = "https://discord.com/api/webhooks/1323364399221702748/fp0LHvWA5s6BAbOB_VG0qwQrXn6_gekYty90vlmfU0PLy0BzQkIHGRTLsXfpdJ_FP_sC"; // Replace with your webhook URL
+            const message = {
+                content: `**Dispatch Unit Created**\n
+                **Unit Name:** ${unitName}\n
+                **Code:** ${code}\n
+                **Game:** ${game}\n
+                **Unit Type:** ${unitType}\n
+                **DGL:** ${dgl}\n
+                **Dispatcher:** ${sig}`
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(message)
+            }).then(response => console.log("Message sent to Channel1"))
+            .catch(error => console.error("Error sending to Channel1:", error));
+        });
+
+        // Function to close the pop-up
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+</body>
+</html>

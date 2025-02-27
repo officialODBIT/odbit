@@ -142,7 +142,7 @@
 
         async function loadNews() {
             try {
-                const response = await fetch(`${baseUrl}?page=1&perPage=500&sort=-date`);
+                const response = await fetch(`${baseUrl}?page=1&perPage=500&sort=date`); // Changed to sort by date in ascending order
                 const data = await response.json();
 
                 if (response.ok) {

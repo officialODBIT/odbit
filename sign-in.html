@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ODBIT - Sign In</title>
     <style>
+        /* CSS styles as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #f1f1f1;
@@ -207,30 +208,38 @@
         <button onclick="closePopup()">OK</button>
     </div>
 
+    <div class="message-popup" id="message-popup">
+        <p>No ongoing investigations</p>
+        <p>No ongoing cases</p>
+        <button onclick="closeMessagePopup()">Close</button>
+    </div>
+
+    <div class="error-popup" id="error-popup">
+        <p>Error 400 <br> 0_xx000400</p>
+        <p>Please try again later.</p>
+        <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+        <button onclick="closeErrorPopup()">Close</button>
+    </div>
+
+    <div class="success-popup" id="success-popup">
+        <p>Info: This is a successful login attempt. Your session will last until closed or refreshed.</p>
+        <p>Cases ongoing: (0)</p>
+        <br><br>
+        <p>Investigations ongoing: (0)</p>
+        <br><br>
+        <p>History: (43)</p>
+        <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
+        <button onclick="closeSuccessPopup()">Close</button>
+    </div>
+
     <script>
-        document.getElementById('sign-in-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            var specID = document.getElementById('specID').value;
-            var pin = document.getElementById('pin').value;
-
-            try {
-                const response = await fetch('http://127.0.0.1:8090/api/collections/staffaccounts/records');
-                const data = await response.json();
-
-                // Check if any record matches the entered SpecID and PIN
-                const account = data.items.find(item => item.spec_id === specID && item.pin === pin);
-
-                if (account) {
-                    document.getElementById('success-popup').style.display = 'block';
-                } else {
-                    showPopup("Incorrect or not added to system");
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                showPopup("An error occurred. Please try again later.");
+        async function fetchRecords() {
+            const response = await fetch('http://127.0.0.1:8090/api/collections/staffaccounts/records');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        });
+            return await response.json();
+        }
 
         function showPopup(message) {
             var popup = document.getElementById('popup');
@@ -242,13 +251,46 @@
             document.getElementById('popup').style.display = 'none';
         }
 
-        function togglePassword() {
-            var pinInput = document.getElementById("pin");
-            pinInput.type = pinInput.type === "password" ? "text" : "password";
+        document.getElementById('sign-in-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            var specID = document.getElementById('specID').value;
+            var pin = document.getElementById('pin').value;
+
+            try {
+                const data = await fetchRecords();
+                const account = data.find(record => record.spec_id === specID && record.pin === pin);
+
+                if (account) {
+                    document.getElementById('success-popup').style.display = 'block';
+                } else {
+                    showPopup("Incorrect or not added to system");
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                showPopup("Error fetching data");
+            }
+        });
+
+        function closeMessagePopup() {
+            document.getElementById('message-popup').style.display = 'none';
         }
 
         function requestAccount() {
-            alert("Account request feature not implemented.");
+            document.getElementById('error-popup').style.display = 'block';
+        }
+
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
+        }
+
+        function closeSuccessPopup() {
+            document.getElementById('success-popup').style.display = 'none';
+        }
+
+        function togglePassword() {
+            var pinInput = document.getElementById("pin");
+            pinInput.type = pinInput.type === "password" ? "text" : "password";
         }
     </script>
 </body>

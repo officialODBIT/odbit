@@ -58,7 +58,7 @@
         .news-box {
             width: 80%;
             max-width: 600px;
-            margin: 20px auto;
+            margin: 50px auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -89,10 +89,55 @@
             background-color: #e6b800;
             transform: scale(1.05);
         }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #ffcc00;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 20px;
+            max-width: 90%;
+            width: 400px;
+            text-align: left;
+        }
+        .popup h2 {
+            margin-top: 0;
+            color: #003366;
+        }
+        .popup p {
+            color: #555;
+        }
+        .popup .close {
+            background-color: #ffcc00;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-top: -10px;
+        }
+        .popup .close:hover {
+            background-color: #e6b800;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
     </style>
-    <!-- Include PocketBase -->
-    <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
-    <script defer src="news.js"></script>
 </head>
 <body>
     <div class="banner">This is an official ODBIT related element.</div>
@@ -106,8 +151,38 @@
         <a href="https://www.odbit.org/tos">TOS</a>
         <a href="https://www.odbit.org/linksforuseodbit">Social</a>
     </div>
-    <div class="content" id="news-container">
-        <!-- News articles will load here -->
+    <div class="content">
+        <div class="news-box">
+            <h2>What Happened</h2>
+            <p>By Evan Sakers, Founder and CEO</p>
+            <p>February 23rd, 2025</p>
+            <button class="news-btn" onclick="openPopup()">Read More</button>
+        </div>
     </div>
+
+    <!-- Overlay for the popup -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Popup content -->
+    <div class="popup" id="popup">
+        <button class="close" onclick="closePopup()">X</button>
+        <h2>What Happened</h2>
+        <p>Here is the detailed content of the news article. You can add more information here.</p>
+    </div>
+
+    <script>
+        function openPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Close the popup if the overlay is clicked
+        document.getElementById('overlay').addEventListener('click', closePopup);
+    </script>
 </body>
 </html>

@@ -89,14 +89,14 @@
     </div>
     <script>
         const employees = {
-            "Evan Sakers (CEO/F)": { contact: "Contact Evan at evan@example.com", info: "Evan is the CEO and Founder." },
-            "Jero (CEO)": { contact: "Contact Jero at jero@example.com", info: "Jero is the Co-Founder and CEO." },
-            "Sophie (CoCEO)": { contact: "Contact Sophie at sophie@example.com", info: "Sophie is the Co-CEO." },
-            "Caleb (Lead Manager)": { contact: "Contact Caleb at caleb@example.com", info: "Caleb is the Lead Manager." },
-            "Nelson Cont... (Manager)": { contact: "Contact Nelson at nelson@example.com", info: "Nelson is a Manager." },
-            "Max (Luintenant)": { contact: "Contact Max at max@example.com", info: "Max is a Lieutenant." },
-            "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "Nathan is Armed Personnel." },
-            "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Nelson ALT is a Manager." }
+            "Evan Sakers (CEO/F)": { info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
+            "Jero (CEO)": { info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
+            "Sophie (CoCEO)": { info: "N/A" },
+            "Caleb (Lead Manager)": { info: "SPECID = 495739672935   PIN = 6882" },
+            "Nelson Cont... (Manager)": { info: "SPECID = 495629572819   PIN = 1396" },
+            "Max (Luintenant)": { info: "N/A" },
+            "Nathan Parnis (Armed)": { info: "N/A" },
+            "Nelson ALT (Manager)": { info: "Alternative. Go to Nelson Cont..." }
         };
         let selectedEmployee = "";
         
@@ -122,7 +122,7 @@
         }
         
         function contactEmployee() {
-            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].contact : "Error: No employee selected.");
+            showPopup(selectedEmployee ? "Contact information is unavailable." : "Error: No employee selected.");
         }
         
         function editInfo() {

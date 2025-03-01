@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #004A98;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            color: black;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+            background: #f8f8f8;
+        }
+        .result-item:hover {
+            background: #ddd;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .button {
+            background: #004A98;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background: #003366;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Employee</h1>
+        <input type="text" id="search" placeholder="Search..." oninput="searchFunction()">
+        <div class="results" id="results"></div>
+        <div class="buttons" id="actionButtons" style="display: none;">
+            <button class="button">Option 1</button>
+            <button class="button">Option 2</button>
+            <button class="button">Option 3</button>
+        </div>
+    </div>
+
+    <script>
+        const employees = ["Evan Sakers (CEO)", "Jero (Co Founder)"];
+        function searchFunction() {
+            const input = document.getElementById("search").value.toLowerCase();
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+            employees.forEach(name => {
+                if (name.toLowerCase().includes(input)) {
+                    let div = document.createElement("div");
+                    div.classList.add("result-item");
+                    div.innerText = name;
+                    div.onclick = function() { selectResult(name); };
+                    resultsDiv.appendChild(div);
+                }
+            });
+        }
+        function selectResult(name) {
+            document.getElementById("search").value = name;
+            document.getElementById("results").innerHTML = "";
+            document.getElementById("actionButtons").style.display = "flex";
+        }
+    </script>
+</body>
+</html>

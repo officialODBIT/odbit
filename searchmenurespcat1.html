@@ -89,14 +89,14 @@
     </div>
     <script>
         const employees = {
-            "Evan Sakers (CEO/F)": { info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
-            "Jero (CEO)": { info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
-            "Sophie (CoCEO)": { info: "N/A" },
-            "Caleb (Lead Manager)": { info: "SPECID = 495739672935   PIN = 6882" },
-            "Nelson Cont... (Manager)": { info: "SPECID = 495629572819   PIN = 1396" },
-            "Max (Luintenant)": { info: "N/A" },
-            "Nathan Parnis (Armed)": { info: "N/A" },
-            "Nelson ALT (Manager)": { info: "Alternative. Go to Nelson Cont..." }
+            "Evan Sakers (CEO/F)": { contact: "Email: sakea1221@gmail.com", info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
+            "Jero (CEO)": { contact: "Contact Jero via Discord: @saggyballs200_85336 -- I know.", info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
+            "Sophie (CoCEO)": { contact: "Contact Sophie via a manager.", info: "N/A" },
+            "Caleb (Lead Manager)": { contact: "Contact Caleb at caleb@example.com", info: "SPECID = 495739672935   PIN = 6882" },
+            "Nelson Cont... (Manager)": { contact: "Contact Nelson at nelson.odbit@gmail.com", info: "SPECID = 495629572819   PIN = 1396" },
+            "Max (Luintenant)": { contact: "Contact Max at max@example.com", info: "N/A" },
+            "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "N/A" },
+            "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Alternative. Go to Nelson Cont..." }
         };
         let selectedEmployee = "";
         
@@ -122,7 +122,7 @@
         }
         
         function contactEmployee() {
-            showPopup(selectedEmployee ? "Contact information is unavailable." : "Error: No employee selected.");
+            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].contact : "Error: No employee selected.");
         }
         
         function editInfo() {

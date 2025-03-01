@@ -28,14 +28,14 @@
             font-size: 1.5rem;
         }
         .keypad {
-            background: #776600;
+            background: #554400;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 5px;
             padding: 10px;
         }
         .keypad button {
-            background: #554400;
+            background: #443300;
             color: white;
             padding: 15px;
             font-size: 1.2rem;
@@ -43,7 +43,7 @@
             cursor: pointer;
         }
         .list {
-            background: #000066;
+            background: #000044;
             color: white;
             padding: 10px;
             overflow-y: auto;
@@ -59,10 +59,10 @@
             border: none;
             cursor: pointer;
         }
-        .add { background: #003300; color: white; }
-        .remove { background: #330000; color: white; }
-        .clear { background: #003333; color: white; }
-        .subtotal { background: #550000; color: white; }
+        .add { background: #002200; color: white; }
+        .remove { background: #220000; color: white; }
+        .clear { background: #002222; color: white; }
+        .subtotal { background: #440000; color: white; }
         .total {
             grid-column: span 2;
             background: black;
@@ -70,6 +70,25 @@
             text-align: center;
             padding: 15px;
             font-size: 1.5rem;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid black;
+            text-align: center;
+            display: none;
+        }
+        .popup button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
         }
     </style>
 </head>
@@ -93,10 +112,11 @@
     <div class="actions">
         <button class="add" onclick="addItem()">Add</button>
         <button class="remove" onclick="removeItem()">Remove</button>
-        <button class="clear" onclick="clearList()">Clear List</button>
+        <button class="clear" onclick="confirmClearList()">Clear List</button>
         <button class="subtotal" onclick="showSubtotal()">Subtotal</button>
     </div>
     <div class="total" id="total">Total: $0.00</div>
+    <div id="popup" class="popup"></div>
     <script>
         let counterValue = "";
         let items = [];
@@ -131,12 +151,8 @@
             }
         }
 
-        function clearList() {
-            if (confirmPopup("Are you sure you want to clear the list?")) {
-                items = [];
-                updateList();
-                updateTotal();
-            }
+        function confirmClearList() {
+            showPopup("Are you sure you want to clear the list?", true);
         }
 
         function updateList() {
@@ -157,15 +173,18 @@
 
         function showSubtotal() {
             let subtotal = items.reduce((acc, curr) => acc + curr, 0);
-            alertPopup(`Subtotal: $${subtotal.toFixed(2)}`);
+            showPopup(`Subtotal: $${subtotal.toFixed(2)}`, false);
         }
 
-        function alertPopup(message) {
-            alert(message);
+        function showPopup(message, confirm) {
+            let popup = document.getElementById('popup');
+            popup.innerHTML = `<p>${message}</p><button onclick="closePopup(true)">OK</button>` + (confirm ? `<button onclick="closePopup(false)">CANCEL</button>` : "");
+            popup.style.display = "block";
         }
 
-        function confirmPopup(message) {
-            return confirm(message);
+        function closePopup(confirmed) {
+            document.getElementById('popup').style.display = "none";
+            if (confirmed) items = [], updateList(), updateTotal();
         }
     </script>
 </body>

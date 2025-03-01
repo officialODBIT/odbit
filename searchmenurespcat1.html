@@ -64,19 +64,30 @@
         <input type="text" id="search" placeholder="Search..." oninput="searchFunction()">
         <div class="results" id="results"></div>
         <div class="buttons" id="actionButtons" style="display: none;">
-            <button class="button">Contact</button>
-            <button class="button">Edit info</button>
-            <button class="button">Info</button>
+            <button class="button" onclick="contactEmployee()">Contact</button>
+            <button class="button" onclick="editInfo()">Edit info</button>
+            <button class="button" onclick="showInfo()">Info</button>
         </div>
     </div>
 
     <script>
-        const employees = ["Evan Sakers (CEO/F)", "Jero (CEO)", "Sophie (CoCEO)", "Caleb (Lead Manager)", "Nelson Cont... (Manager)", "Max (Luintenant)", "Nathan Parnis (Armed)", "Nelson ALT (Manager)"];
+        const employees = {
+            "Evan Sakers (CEO/F)": { contact: "Contact Evan at evan@example.com", info: "Evan is the CEO and Founder." },
+            "Jero (CEO)": { contact: "Contact Jero at jero@example.com", info: "Jero is the Co-Founder and CEO." },
+            "Sophie (CoCEO)": { contact: "Contact Sophie at sophie@example.com", info: "Sophie is the Co-CEO." },
+            "Caleb (Lead Manager)": { contact: "Contact Caleb at caleb@example.com", info: "Caleb is the Lead Manager." },
+            "Nelson Cont... (Manager)": { contact: "Contact Nelson at nelson@example.com", info: "Nelson is a Manager." },
+            "Max (Luintenant)": { contact: "Contact Max at max@example.com", info: "Max is a Lieutenant." },
+            "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "Nathan is Armed Personnel." },
+            "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Nelson ALT is a Manager." }
+        };
+        let selectedEmployee = "";
+        
         function searchFunction() {
             const input = document.getElementById("search").value.toLowerCase();
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "";
-            employees.forEach(name => {
+            Object.keys(employees).forEach(name => {
                 if (name.toLowerCase().includes(input)) {
                     let div = document.createElement("div");
                     div.classList.add("result-item");
@@ -86,10 +97,28 @@
                 }
             });
         }
+        
         function selectResult(name) {
+            selectedEmployee = name;
             document.getElementById("search").value = name;
             document.getElementById("results").innerHTML = "";
             document.getElementById("actionButtons").style.display = "flex";
+        }
+        
+        function contactEmployee() {
+            if (selectedEmployee && employees[selectedEmployee]) {
+                alert(employees[selectedEmployee].contact);
+            }
+        }
+        
+        function editInfo() {
+            alert("403 Forbidden");
+        }
+        
+        function showInfo() {
+            if (selectedEmployee && employees[selectedEmployee]) {
+                alert(employees[selectedEmployee].info);
+            }
         }
     </script>
 </body>

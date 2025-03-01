@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .display {
+            background-color: #222;
+            color: #00FF00;
+            padding: 15px;
+            font-size: 2em;
+            text-align: right;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            width: 23%;
+            margin: 5px;
+            padding: 20px;
+            font-size: 1.2em;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .button.clear {
+            background-color: red;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        POS System
+    </div>
+    <div class="display" id="display">
+        $0.00
+    </div>
+
+    <div class="button-row">
+        <button class="button" onclick="appendToDisplay('1')">1</button>
+        <button class="button" onclick="appendToDisplay('2')">2</button>
+        <button class="button" onclick="appendToDisplay('3')">3</button>
+        <button class="button" onclick="appendToDisplay('4')">4</button>
+    </div>
+    <div class="button-row">
+        <button class="button" onclick="appendToDisplay('5')">5</button>
+        <button class="button" onclick="appendToDisplay('6')">6</button>
+        <button class="button" onclick="appendToDisplay('7')">7</button>
+        <button class="button" onclick="appendToDisplay('8')">8</button>
+    </div>
+    <div class="button-row">
+        <button class="button" onclick="appendToDisplay('9')">9</button>
+        <button class="button" onclick="appendToDisplay('0')">0</button>
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button" onclick="calculateTotal()">=</button>
+    </div>
+
+    <div class="footer">
+        2012 POS System
+    </div>
+</div>
+
+<script>
+    function appendToDisplay(value) {
+        const display = document.getElementById('display');
+        if (display.innerText === '$0.00') {
+            display.innerText = '$' + value;
+        } else {
+            display.innerText += value;
+        }
+    }
+
+    function clearDisplay() {
+        document.getElementById('display').innerText = '$0.00';
+    }
+
+    function calculateTotal() {
+        const display = document.getElementById('display');
+        const value = parseFloat(display.innerText.replace('$', ''));
+        display.innerText = '$' + (value * 1.2).toFixed(2); // Example of tax calculation
+    }
+</script>
+
+</body>
+</html>

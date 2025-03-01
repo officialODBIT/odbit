@@ -16,26 +16,26 @@
             grid-template-rows: auto 2fr auto auto auto;
             gap: 5px;
             height: 100vh;
-            background: #222;
+            background: #111;
             padding: 10px;
         }
         .counter {
             grid-column: span 2;
-            background: #444;
+            background: #333;
             color: white;
             text-align: center;
             padding: 15px;
             font-size: 1.5rem;
         }
         .keypad {
-            background: #aa8800;
+            background: #776600;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 5px;
             padding: 10px;
         }
         .keypad button {
-            background: #665500;
+            background: #554400;
             color: white;
             padding: 15px;
             font-size: 1.2rem;
@@ -43,7 +43,7 @@
             cursor: pointer;
         }
         .list {
-            background: #00008b;
+            background: #000066;
             color: white;
             padding: 10px;
             overflow-y: auto;
@@ -59,10 +59,10 @@
             border: none;
             cursor: pointer;
         }
-        .add { background: #005500; color: white; }
-        .remove { background: #550000; color: white; }
-        .clear { background: #006666; color: white; }
-        .subtotal { background: #660000; color: white; }
+        .add { background: #003300; color: white; }
+        .remove { background: #330000; color: white; }
+        .clear { background: #003333; color: white; }
+        .subtotal { background: #550000; color: white; }
         .total {
             grid-column: span 2;
             background: black;
@@ -94,12 +94,13 @@
         <button class="add" onclick="addItem()">Add</button>
         <button class="remove" onclick="removeItem()">Remove</button>
         <button class="clear" onclick="clearList()">Clear List</button>
-        <button class="subtotal">Subtotal</button>
+        <button class="subtotal" onclick="showSubtotal()">Subtotal</button>
     </div>
     <div class="total" id="total">Total: $0.00</div>
     <script>
         let counterValue = "";
         let items = [];
+        const taxRate = 0.07;
 
         function addToCounter(value) {
             counterValue += value;
@@ -131,9 +132,11 @@
         }
 
         function clearList() {
-            items = [];
-            updateList();
-            updateTotal();
+            if (confirmPopup("Are you sure you want to clear the list?")) {
+                items = [];
+                updateList();
+                updateTotal();
+            }
         }
 
         function updateList() {
@@ -142,21 +145,27 @@
             items.forEach((item, index) => {
                 let div = document.createElement('div');
                 div.innerText = `Item ${index + 1}: $${item.toFixed(2)}`;
-                div.style.cursor = "pointer";
-                div.onclick = () => removeSpecificItem(index);
                 list.appendChild(div);
             });
         }
 
-        function removeSpecificItem(index) {
-            items.splice(index, 1);
-            updateList();
-            updateTotal();
+        function updateTotal() {
+            let subtotal = items.reduce((acc, curr) => acc + curr, 0);
+            let total = subtotal + (subtotal * taxRate);
+            document.getElementById('total').innerText = `Total: $${total.toFixed(2)}`;
         }
 
-        function updateTotal() {
-            let total = items.reduce((acc, curr) => acc + curr, 0);
-            document.getElementById('total').innerText = `Total: $${total.toFixed(2)}`;
+        function showSubtotal() {
+            let subtotal = items.reduce((acc, curr) => acc + curr, 0);
+            alertPopup(`Subtotal: $${subtotal.toFixed(2)}`);
+        }
+
+        function alertPopup(message) {
+            alert(message);
+        }
+
+        function confirmPopup(message) {
+            return confirm(message);
         }
     </script>
 </body>

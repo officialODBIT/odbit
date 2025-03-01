@@ -30,31 +30,45 @@
             overflow-y: auto;
             margin-bottom: 20px;
         }
-        .result-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            cursor: pointer;
-            background: #f8f8f8;
-        }
-        .result-item:hover {
-            background: #ddd;
-        }
         .buttons {
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin-top: 20px;
         }
         .button {
-            background: #004A98;
+            background: blue;
             color: white;
             border: none;
-            padding: 15px;
-            font-size: 20px;
+            padding: 20px;
+            font-size: 24px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 10px;
+            width: 200px;
         }
+        .button:nth-child(2) { background: red; }
+        .button:nth-child(3) { background: green; }
         .button:hover {
-            background: #003366;
+            opacity: 0.8;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 300px;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -63,23 +77,26 @@
         <h1>Search Employee</h1>
         <input type="text" id="search" placeholder="Search..." oninput="searchFunction()">
         <div class="results" id="results"></div>
-        <div class="buttons" id="actionButtons" style="display: none;">
+        <div class="buttons">
             <button class="button" onclick="contactEmployee()">Contact</button>
             <button class="button" onclick="editInfo()">Edit info</button>
             <button class="button" onclick="showInfo()">Info</button>
         </div>
     </div>
-
+    <div id="popup" class="popup">
+        <p id="popupText"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
     <script>
         const employees = {
-            "Evan Sakers (CEO/F)": { contact: "Email: sakea1221@gmail.com", info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
-            "Jero (CEO)": { contact: "Contact Jero via Discord: @saggyballs200_85336 -- I know.", info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
-            "Sophie (CoCEO)": { contact: "Contact Sophie via a manager.", info: "N/A" },
-            "Caleb (Lead Manager)": { contact: "Contact Caleb at caleb@example.com", info: "SPECID = 495739672935   PIN = 6882" },
-            "Nelson Cont... (Manager)": { contact: "Contact Nelson at nelson.odbit@gmail.com", info: "SPECID = 495629572819   PIN = 1396" },
-            "Max (Luintenant)": { contact: "Contact Max at max@example.com", info: "N/A" },
-            "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "N/A" },
-            "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Alternative. Go to Nelson Cont..." }
+            "Evan Sakers (CEO/F)": { contact: "Contact Evan at evan@example.com", info: "Evan is the CEO and Founder." },
+            "Jero (CEO)": { contact: "Contact Jero at jero@example.com", info: "Jero is the Co-Founder and CEO." },
+            "Sophie (CoCEO)": { contact: "Contact Sophie at sophie@example.com", info: "Sophie is the Co-CEO." },
+            "Caleb (Lead Manager)": { contact: "Contact Caleb at caleb@example.com", info: "Caleb is the Lead Manager." },
+            "Nelson Cont... (Manager)": { contact: "Contact Nelson at nelson@example.com", info: "Nelson is a Manager." },
+            "Max (Luintenant)": { contact: "Contact Max at max@example.com", info: "Max is a Lieutenant." },
+            "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "Nathan is Armed Personnel." },
+            "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Nelson ALT is a Manager." }
         };
         let selectedEmployee = "";
         
@@ -102,23 +119,27 @@
             selectedEmployee = name;
             document.getElementById("search").value = name;
             document.getElementById("results").innerHTML = "";
-            document.getElementById("actionButtons").style.display = "flex";
         }
         
         function contactEmployee() {
-            if (selectedEmployee && employees[selectedEmployee]) {
-                alert(employees[selectedEmployee].contact);
-            }
+            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].contact : "Error: No employee selected.");
         }
         
         function editInfo() {
-            alert("403 Forbidden");
+            showPopup("403 Forbidden");
         }
         
         function showInfo() {
-            if (selectedEmployee && employees[selectedEmployee]) {
-                alert(employees[selectedEmployee].info);
-            }
+            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].info : "Error: No employee selected.");
+        }
+        
+        function showPopup(text) {
+            document.getElementById("popupText").innerText = text;
+            document.getElementById("popup").style.display = "block";
+        }
+        
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
         }
     </script>
 </body>

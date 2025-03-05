@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS Search</title>
+    <title>User Search UI</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,6 +70,24 @@
             padding: 10px;
             cursor: pointer;
         }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .action-button {
+            background-color: green;
+            padding: 10px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 10px;
+        }
+        .action-button.decline {
+            background-color: red;
+        }
     </style>
 </head>
 <body>
@@ -77,16 +95,21 @@
         <h1>Search Employee</h1>
         <input type="text" id="search" placeholder="Search..." oninput="searchFunction()">
         <div class="results" id="results"></div>
-        <div class="buttons">
-            <button class="button" onclick="contactEmployee()">Contact</button>
-            <button class="button" onclick="editInfo()">Edit info</button>
-            <button class="button" onclick="showInfo()">Info</button>
+    </div>
+
+    <div id="action-popup" class="popup">
+        <p id="action-popup-text"></p>
+        <div class="action-buttons">
+            <button class="action-button" onclick="acceptUser()">Accept</button>
+            <button class="action-button decline" onclick="declineUser()">Decline</button>
         </div>
     </div>
-    <div id="popup" class="popup">
-        <p id="popupText"></p>
-        <button onclick="closePopup()">Close</button>
+
+    <div id="result-popup" class="popup">
+        <p id="result-popup-text"></p>
+        <button onclick="closePopup()">OK</button>
     </div>
+
     <script>
         const employees = {
             "Evan Sakers (CEO/F)": { contact: "Email: sakea1221@gmail.com", info: "SPECID AND PIN IS FORBIDDEN ACCESS" },
@@ -98,8 +121,9 @@
             "Nathan Parnis (Armed)": { contact: "Contact Nathan at nathan@example.com", info: "N/A" },
             "Nelson ALT (Manager)": { contact: "Contact Nelson ALT at nelson.alt@example.com", info: "Alternative. Go to Nelson Cont..." }
         };
+
         let selectedEmployee = "";
-        
+
         function searchFunction() {
             const input = document.getElementById("search").value.toLowerCase();
             const resultsDiv = document.getElementById("results");
@@ -114,32 +138,32 @@
                 }
             });
         }
-        
+
         function selectResult(name) {
             selectedEmployee = name;
             document.getElementById("search").value = name;
             document.getElementById("results").innerHTML = "";
+            document.getElementById("action-popup-text").innerText = `Do you accept or decline the user: ${name}?`;
+            document.getElementById("action-popup").style.display = "block";
         }
-        
-        function contactEmployee() {
-            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].contact : "Error: No employee selected.");
+
+        function acceptUser() {
+            showResultPopup("User has been accepted.");
+            document.getElementById("action-popup").style.display = "none";
         }
-        
-        function editInfo() {
-            showPopup("403 Forbidden");
+
+        function declineUser() {
+            showResultPopup("User is not permitted. Therefore, declined.");
+            document.getElementById("action-popup").style.display = "none";
         }
-        
-        function showInfo() {
-            showPopup(selectedEmployee && employees[selectedEmployee] ? employees[selectedEmployee].info : "Error: No employee selected.");
+
+        function showResultPopup(text) {
+            document.getElementById("result-popup-text").innerText = text;
+            document.getElementById("result-popup").style.display = "block";
         }
-        
-        function showPopup(text) {
-            document.getElementById("popupText").innerText = text;
-            document.getElementById("popup").style.display = "block";
-        }
-        
+
         function closePopup() {
-            document.getElementById("popup").style.display = "none";
+            document.getElementById("result-popup").style.display = "none";
         }
     </script>
 </body>

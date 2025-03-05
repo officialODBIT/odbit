@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Command Prompt</title>
+    <style>
+        body {
+            background-color: black;
+            color: lime;
+            font-family: monospace;
+            margin: 0;
+            padding: 10px;
+        }
+        #terminal {
+            width: 100%;
+            height: 90vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        #input-line {
+            display: flex;
+        }
+        #input-line span {
+            color: white;
+        }
+        #command {
+            background: none;
+            border: none;
+            color: lime;
+            font: inherit;
+            outline: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+    <div id="input-line">
+        <span>&gt; </span><input type="text" id="command" autofocus>
+    </div>
+    <script>
+        const terminal = document.getElementById("terminal");
+        const commandInput = document.getElementById("command");
+
+        function printOutput(text) {
+            terminal.innerHTML += text + "\n";
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function processCommand(command) {
+            const args = command.trim().split(" ");
+            const cmd = args[0].toLowerCase();
+            
+            switch (cmd) {
+                case "help":
+                    printOutput("Available commands: help, clear, echo, time");
+                    break;
+                case "clear":
+                    terminal.innerHTML = "";
+                    break;
+                case "echo":
+                    printOutput(args.slice(1).join(" "));
+                    break;
+                case "time":
+                    printOutput(new Date().toLocaleTimeString());
+                    break;
+                default:
+                    printOutput("Unknown command: " + cmd);
+            }
+        }
+
+        commandInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                const command = commandInput.value;
+                printOutput("> " + command);
+                processCommand(command);
+                commandInput.value = "";
+            }
+        });
+    </script>
+</body>
+</html>

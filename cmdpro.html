@@ -54,13 +54,22 @@
             terminal.scrollTop = terminal.scrollHeight;
         }
 
+        function detectArchitecture() {
+            const platform = navigator.userAgent.toLowerCase();
+            if (platform.includes("arm")) {
+                return "ARM";
+            } else {
+                return "x86";
+            }
+        }
+
         function processCommand(command) {
             const args = command.trim().split(" ");
             const cmd = args[0].toLowerCase();
             
             switch (cmd) {
                 case "help":
-                    printOutput("Available commands: help, clear, echo, time, date, random, reverse, math, greet, about, ascii, length, uppercase, lowercase, repeat, website, version, sudo reboot, sudo shutdown, sudo ls, sudo pwd, sudo whoami");
+                    printOutput("Available commands: help, clear, echo, time, date, random, reverse, math, greet, about, ascii, length, uppercase, lowercase, repeat, website, version, uname -m, sudo reboot, sudo shutdown, sudo ls, sudo pwd, sudo whoami");
                     break;
                 case "clear":
                     terminal.innerHTML = "web@userguest: > ";
@@ -113,6 +122,13 @@
                     break;
                 case "version":
                     printOutput("Fake Crosh Terminal v1.0");
+                    break;
+                case "uname":
+                    if (args[1] === "-m") {
+                        printOutput(detectArchitecture());
+                    } else {
+                        printOutput("Unknown uname command");
+                    }
                     break;
                 case "sudo":
                     if (args[1] === "reboot") {

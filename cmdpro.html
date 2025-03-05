@@ -34,6 +34,7 @@
         const terminal = document.getElementById("terminal");
         const username = "web@userguest";
         let inputBuffer = "";
+        let shellAccess = false;
 
         function printOutput(text) {
             terminal.innerHTML += text + "\n";
@@ -48,9 +49,18 @@
             const args = command.trim().split(" ");
             const cmd = args[0].toLowerCase();
             
+            if (command === "sudo shell access flag=0") {
+                shellAccess = true;
+                printOutput("Shell access granted. Additional commands unlocked.");
+                return;
+            }
+            
             switch (cmd) {
                 case "help":
                     printOutput("Available commands: help, clear, echo, time, date, uname -m, sudo reboot, sudo shutdown, dir, ls, cd, mkdir, rmdir, touch, rm, cat, whoami, pwd, hostname, ipconfig, ifconfig, ping, exit");
+                    if (shellAccess) {
+                        printOutput("Unlocked commands: top, ps, kill, chmod, chown, df, du, env, export, free, history, locate, man, mount, nano, vi, nohup, passwd, ps aux, reboot, shutdown, su, sync, tar, traceroute, uptime, useradd, userdel, wget, curl, apt-get, yum, dnf, zypper, pacman, service, systemctl, netstat, lsof, rsync, ssh, scp, tee, touch, uname -a");
+                    }
                     break;
                 case "clear":
                     terminal.innerHTML = "";
@@ -73,9 +83,9 @@
                     break;
                 case "sudo":
                     if (args[1] === "reboot") {
-                        printOutput("Rebooting system... (not really)");
+                        printOutput("Rebooting system... ");
                     } else if (args[1] === "shutdown") {
-                        printOutput("Shutting down system... (not really)");
+                        printOutput("Shutting down system... ");
                     } else {
                         printOutput("Unknown sudo command");
                     }
@@ -104,7 +114,11 @@
                     printOutput("Session terminated.");
                     break;
                 default:
-                    printOutput("Unknown command: " + cmd);
+                    if (shellAccess) {
+                        printOutput("Executing advanced command: " + cmd);
+                    } else {
+                        printOutput("Unknown command: " + cmd);
+                    }
             }
         }
 

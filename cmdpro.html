@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browser Command Prompt</title>
+    <title>Browser Crosh</title>
     <style>
         body {
             background-color: black;
@@ -32,19 +32,25 @@
             outline: none;
             width: 100%;
         }
+        .blink {
+            animation: blink-animation 1s steps(2, start) infinite;
+        }
+        @keyframes blink-animation {
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
-    <div id="terminal"></div>
+    <div id="terminal">web@userguest: > </div>
     <div id="input-line">
-        <span>&gt; </span><input type="text" id="command" autofocus>
+        <span>web@userguest: <span class="blink">></span> </span><input type="text" id="command" autofocus>
     </div>
     <script>
         const terminal = document.getElementById("terminal");
         const commandInput = document.getElementById("command");
 
         function printOutput(text) {
-            terminal.innerHTML += text + "\n";
+            terminal.innerHTML += "\n" + text;
             terminal.scrollTop = terminal.scrollHeight;
         }
 
@@ -54,16 +60,74 @@
             
             switch (cmd) {
                 case "help":
-                    printOutput("Available commands: help, clear, echo, time");
+                    printOutput("Available commands: help, clear, echo, time, date, random, reverse, math, greet, about, ascii, length, uppercase, lowercase, repeat, website, version, sudo reboot, sudo shutdown, sudo ls, sudo pwd, sudo whoami");
                     break;
                 case "clear":
-                    terminal.innerHTML = "";
+                    terminal.innerHTML = "web@userguest: > ";
                     break;
                 case "echo":
                     printOutput(args.slice(1).join(" "));
                     break;
                 case "time":
                     printOutput(new Date().toLocaleTimeString());
+                    break;
+                case "date":
+                    printOutput(new Date().toLocaleDateString());
+                    break;
+                case "random":
+                    printOutput("Random number: " + Math.floor(Math.random() * 100));
+                    break;
+                case "reverse":
+                    printOutput(args.slice(1).join(" ").split('').reverse().join(''));
+                    break;
+                case "math":
+                    try {
+                        printOutput("Result: " + eval(args.slice(1).join(" ")));
+                    } catch {
+                        printOutput("Invalid math expression");
+                    }
+                    break;
+                case "greet":
+                    printOutput("Hello, " + (args[1] || "stranger") + "!");
+                    break;
+                case "about":
+                    printOutput("Fake Crosh Terminal v1.0 by ChatGPT");
+                    break;
+                case "ascii":
+                    printOutput("(\"`-''-/).split('').join('\n'));
+                    break;
+                case "length":
+                    printOutput("Length: " + args.slice(1).join(" ").length);
+                    break;
+                case "uppercase":
+                    printOutput(args.slice(1).join(" ").toUpperCase());
+                    break;
+                case "lowercase":
+                    printOutput(args.slice(1).join(" ").toLowerCase());
+                    break;
+                case "repeat":
+                    printOutput(args.slice(2).join(" ").repeat(parseInt(args[1]) || 1));
+                    break;
+                case "website":
+                    printOutput("Visit: https://odbit.org");
+                    break;
+                case "version":
+                    printOutput("Fake Crosh Terminal v1.0");
+                    break;
+                case "sudo":
+                    if (args[1] === "reboot") {
+                        printOutput("Rebooting system... (not really)");
+                    } else if (args[1] === "shutdown") {
+                        printOutput("Shutting down system... (not really)");
+                    } else if (args[1] === "ls") {
+                        printOutput("Documents  Downloads  Pictures  Videos");
+                    } else if (args[1] === "pwd") {
+                        printOutput("/home/userguest");
+                    } else if (args[1] === "whoami") {
+                        printOutput("userguest");
+                    } else {
+                        printOutput("Unknown sudo command");
+                    }
                     break;
                 default:
                     printOutput("Unknown command: " + cmd);
@@ -73,7 +137,7 @@
         commandInput.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 const command = commandInput.value;
-                printOutput("> " + command);
+                printOutput("web@userguest: > " + command);
                 processCommand(command);
                 commandInput.value = "";
             }

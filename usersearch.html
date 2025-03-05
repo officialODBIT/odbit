@@ -3,53 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Search UI</title>
+    <title>User Search UI Elem...</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #004A98;
-            color: white;
+            font-family: sans-serif;
+            background-color: white;
+            color: black;
             text-align: center;
         }
         .container {
             width: 80%;
             margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            color: black;
+            padding: 10px;
         }
         input {
             width: 80%;
             padding: 10px;
-            font-size: 18px;
             margin-bottom: 10px;
+            font-size: 18px;
         }
         .results {
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .button {
-            background: blue;
-            color: white;
-            border: none;
-            padding: 20px;
-            font-size: 24px;
+        .result-item {
             cursor: pointer;
-            border-radius: 10px;
-            width: 200px;
-        }
-        .button:nth-child(2) { background: red; }
-        .button:nth-child(3) { background: green; }
-        .button:hover {
-            opacity: 0.8;
+            margin: 5px;
         }
         .popup {
             display: none;
@@ -57,36 +37,26 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background: white;
+            padding: 10px;
+            border: 1px solid black;
+            background-color: white;
             color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             text-align: center;
-            width: 300px;
         }
         .popup button {
+            padding: 5px;
+            font-size: 14px;
             margin-top: 10px;
-            padding: 10px;
-            cursor: pointer;
         }
         .action-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .action-button {
-            background-color: green;
-            padding: 10px;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 10px;
-        }
-        .action-button.decline {
-            background-color: red;
+            padding: 5px;
+            font-size: 14px;
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -101,7 +71,7 @@
         <p id="action-popup-text"></p>
         <div class="action-buttons">
             <button class="action-button" onclick="acceptUser()">Accept</button>
-            <button class="action-button decline" onclick="declineUser()">Decline</button>
+            <button class="action-button" onclick="declineUser()">Decline</button>
         </div>
     </div>
 

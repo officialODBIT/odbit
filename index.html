@@ -228,13 +228,14 @@
                 document.getElementById("changelog-popup").style.display = "block"; // Show if not shown
             }
             const startTime = Date.now();  // Record the start time
-
-window.onload = () => {
-    const loadTime = Date.now() - startTime;  // Calculate the load time
-    console.info(`Loaded in ${loadTime} ms`);
-
-
         };
+        const startTime = Date.now();  // Record the start time
+
+        window.onload = () => {
+            const loadTime = Date.now() - startTime;  // Calculate the load time
+            console.info(`Loaded in ${loadTime} milliseconds`);
+        };
+
     </script>
 </body>
 </html>

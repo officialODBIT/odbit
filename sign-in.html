@@ -240,6 +240,11 @@
 
  
      <script>
+      document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+    alert('right-clicking is disabled 💀');
+});
+
          function showPopup(message) {
              var popup = document.getElementById('popup');
              popup.querySelector('p').textContent = message;

@@ -20,14 +20,14 @@
     </style>
 </head>
 <body>
-    <h1>Redirecting...</h1>
-    <p>If you are not redirected automatically, <a href="https://odbit.org/home">click here</a>.</p>
+    <h1>Redirecting to the home page...</h1>
+    <p>If you are not redirected automatically, <a href="/home">click here</a>.</p>
 
     <script>
-        // Redirect after 3 seconds (3000 milliseconds)
-        setTimeout(function() {
-            window.location.href = "https://odbit.org/home";  // Change this URL to the target page
-        }, 3000);
+        // Check if we're already on the home page to avoid infinite loop
+        if (window.location.pathname !== '/home') {
+            window.location.href = "/home";  // Redirect to /home page
+        }
     </script>
 </body>
 </html>

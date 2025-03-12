@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Test</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question label {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .question input[type="text"],
+        .question select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        .question input[type="radio"] {
+            margin-right: 10px;
+        }
+        .question .optional {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        button {
+            background-color: #ff4757;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #ff6b81;
+        }
+        .result {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Professional Test</h1>
+        <form id="quizForm">
+            <!-- Question 1 -->
+            <div class="question">
+                <label for="name">What is your full name? <span class="optional">(required)</span></label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <!-- Question 2 -->
+            <div class="question">
+                <label for="province">What is your province of residence? <span class="optional">(required)</span></label>
+                <input type="text" id="province" name="province" required>
+            </div>
+            <!-- Question 3 -->
+            <div class="question">
+                <label for="address">What is your address? <span class="optional">(optional)</span></label>
+                <input type="text" id="address" name="address">
+            </div>
+            <!-- Question 4 -->
+            <div class="question">
+                <label for="ethnicity">What is your ethnicity? <span class="optional">(required)</span></label>
+                <input type="text" id="ethnicity" name="ethnicity" required>
+            </div>
+            <!-- Question 5 -->
+            <div class="question">
+                <label>What is your gender? <span class="optional">(required)</span></label>
+                <input type="radio" id="male" name="gender" value="Male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female">
+                <label for="female">Female</label>
+            </div>
+            <!-- Question 6 -->
+            <div class="question">
+                <label for="odbitPurpose">What is the main purpose of ODBIT? <span class="optional">(required)</span></label>
+                <input type="text" id="odbitPurpose" name="odbitPurpose" required>
+            </div>
+            <!-- Question 7 -->
+            <div class="question">
+                <label for="oscrPurpose">What is the main purpose of OSCR? <span class="optional">(required)</span></label>
+                <input type="text" id="oscrPurpose" name="oscrPurpose" required>
+            </div>
+            <!-- Question 8 -->
+            <div class="question">
+                <label for="pedophileAction">What action should be taken when encountering inappropriate behavior on online platforms? <span class="optional">(required)</span></label>
+                <input type="text" id="pedophileAction" name="pedophileAction" required>
+            </div>
+            <!-- Question 9 -->
+            <div class="question">
+                <label for="futureGame">What are some considerations when planning to expand a gaming platform or community? <span class="optional">(required)</span></label>
+                <input type="text" id="futureGame" name="futureGame" required>
+            </div>
+            <!-- Question 10 -->
+            <div class="question">
+                <label for="careerGoals">What are your long-term career goals? <span class="optional">(required)</span></label>
+                <input type="text" id="careerGoals" name="careerGoals" required>
+            </div>
+            <!-- Question 11 -->
+            <div class="question">
+                <label for="educationLevel">What is your highest level of education completed? <span class="optional">(required)</span></label>
+                <input type="text" id="educationLevel" name="educationLevel" required>
+            </div>
+            <!-- Question 12 -->
+            <div class="question">
+                <label for="skills">What specific skills do you possess that make you an asset in your field? <span class="optional">(required)</span></label>
+                <input type="text" id="skills" name="skills" required>
+            </div>
+            <!-- Question 13 -->
+            <div class="question">
+                <label for="workExperience">Please describe your relevant work experience. <span class="optional">(required)</span></label>
+                <input type="text" id="workExperience" name="workExperience" required>
+            </div>
+            <!-- Question 14 -->
+            <div class="question">
+                <label for="workEthic">How would you describe your work ethic? <span class="optional">(required)</span></label>
+                <input type="text" id="workEthic" name="workEthic" required>
+            </div>
+            <!-- Question 15 -->
+            <div class="question">
+                <label for="teamwork">How do you approach teamwork in a professional setting? <span class="optional">(required)</span></label>
+                <input type="text" id="teamwork" name="teamwork" required>
+            </div>
+            <!-- Question 16 -->
+            <div class="question">
+                <label for="leadership">What qualities make a good leader in your opinion? <span class="optional">(required)</span></label>
+                <input type="text" id="leadership" name="leadership" required>
+            </div>
+            <!-- Question 17 -->
+            <div class="question">
+                <label for="conflictResolution">Describe a time when you had to resolve a conflict at work. <span class="optional">(required)</span></label>
+                <input type="text" id="conflictResolution" name="conflictResolution" required>
+            </div>
+            <!-- Question 18 -->
+            <div class="question">
+                <label for="professionalDevelopment">What steps do you take for professional development? <span class="optional">(required)</span></label>
+                <input type="text" id="professionalDevelopment" name="professionalDevelopment" required>
+            </div>
+            <!-- Question 19 -->
+            <div class="question">
+                <label for="industryTrends">What are the current trends in your industry? <span class="optional">(required)</span></label>
+                <input type="text" id="industryTrends" name="industryTrends" required>
+            </div>
+            <!-- Question 20 -->
+            <div class="question">
+                <label for="problemSolving">Give an example of a complex problem you've solved. <span class="optional">(required)</span></label>
+                <input type="text" id="problemSolving" name="problemSolving" required>
+            </div>
+            <!-- Question 21 -->
+            <div class="question">
+                <label for="decisionMaking">Describe a difficult decision you've had to make in your professional career. <span class="optional">(required)</span></label>
+                <input type="text" id="decisionMaking" name="decisionMaking" required>
+            </div>
+            <!-- Question 22 -->
+            <div class="question">
+                <label for="workplaceCulture">How do you contribute to maintaining a positive workplace culture? <span class="optional">(required)</span></label>
+                <input type="text" id="workplaceCulture" name="workplaceCulture" required>
+            </div>
+            <!-- Question 23 -->
+            <div class="question">
+                <label for="personalStrengths">What personal strengths do you bring to your work? <span class="optional">(required)</span></label>
+                <input type="text" id="personalStrengths" name="personalStrengths" required>
+            </div>
+            <!-- Question 24 -->
+            <div class="question">
+                <label for="goalsForNextYear">What are your professional goals for the next year? <span class="optional">(required)</span></label>
+                <input type="text" id="goalsForNextYear" name="goalsForNextYear" required>
+            </div>
+            <!-- Question 25 -->
+            <div class="question">
+                <label for="currentProjects">What projects are you currently working on? <span class="optional">(required)</span></label>
+                <input type="text" id="currentProjects" name="currentProjects" required>
+            </div>
+            <!-- Question 26 -->
+            <div class="question">
+                <label for="technologyUse">How do you incorporate technology into your daily work? <span class="optional">(required)</span></label>
+                <input type="text" id="technologyUse" name="technologyUse" required>
+            </div>
+            <!-- Question 27 -->
+            <div class="question">
+                <label for="industryLeaders">Who do you consider to be leaders in your industry? <span class="optional">(required)</span></label>
+                <input type="text" id="industryLeaders" name="industryLeaders" required>
+            </div>
+            <!-- Question 28 -->
+            <div class="question">
+                <label for="professionalAchievements">What professional achievement are you most proud of? <span class="optional">(required)</span></label>
+                <input type="text" id="professionalAchievements" name="professionalAchievements" required>
+            </div>
+            <!-- Question 29 -->
+            <div class="question">
+                <label for="mostDifficultTask">What is the most difficult task you've completed at work? <span class="optional">(required)</span></label>
+                <input type="text" id="mostDifficultTask" name="mostDifficultTask" required>
+            </div>
+            <!-- Question 30 -->
+            <div class="question">
+                <label for="workplaceInnovation">How do you contribute to innovation in the workplace? <span class="optional">(required)</span></label>
+                <input type="text" id="workplaceInnovation" name="workplaceInnovation" required>
+            </div>
+            <!-- Question 31 -->
+            <div class="question">
+                <label for="adaptability">How do you handle change in the workplace? <span class="optional">(required)</span></label>
+                <input type="text" id="adaptability" name="adaptability" required>
+            </div>
+            <!-- Question 32 -->
+            <div class="question">
+                <label for="leadershipDevelopment">What resources do you use to develop your leadership skills? <span class="optional">(required)</span></label>
+                <input type="text" id="leadershipDevelopment" name="leadershipDevelopment" required>
+            </div>
+            <!-- Question 33 -->
+            <div class="question">
+                <label for="teamDevelopment">How do you contribute to developing your team's skills? <span class="optional">(required)</span></label>
+                <input type="text" id="teamDevelopment" name="teamDevelopment" required>
+            </div>
+            <!-- Question 34 -->
+            <div class="question">
+                <label for="companyValues">What values are most important to you in a company? <span class="optional">(required)</span></label>
+                <input type="text" id="companyValues" name="companyValues" required>
+            </div>
+            <!-- Question 35 -->
+            <div class="question">
+                <label for="satisfactionFactors">What factors contribute most to your job satisfaction? <span class="optional">(required)</span></label>
+                <input type="text" id="satisfactionFactors" name="satisfactionFactors" required>
+            </div>
+            <!-- Question 36 -->
+            <div class="question">
+                <label for="selfImprovement">What steps do you take for self-improvement in your career? <span class="optional">(required)</span></label>
+                <input type="text" id="selfImprovement" name="selfImprovement" required>
+            </div>
+            <!-- Question 37 -->
+            <div class="question">
+                <label for="workBalance">How do you maintain work-life balance? <span class="optional">(required)</span></label>
+                <input type="text" id="workBalance" name="workBalance" required>
+            </div>
+            <!-- Question 38 -->
+            <div class="question">
+                <label for="futureCareerPlans">What are your future career plans? <span class="optional">(required)</span></label>
+                <input type="text" id="futureCareerPlans" name="futureCareerPlans" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="result">
+            <p>Thank you for completing the test!</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.querySelector('.result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

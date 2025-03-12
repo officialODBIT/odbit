@@ -3,12 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        window.location.href = "https://odbit.org";
-    </script>
+    <title>ODBIT - About Us</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        #cookie-banner {
+            display: none; /* Initially hide the cookie banner */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8d7da;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #f5c6cb;
+        }
+        /* Style for the pop-up */
+        #error-popup {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid red;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #error-code {
+            font-size: 48px; /* Big bold size */
+            color: red; /* Red color */
+            font-weight: bold; /* Bold text */
+        }
+        #overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            z-index: 999; /* Just below the pop-up */
+        }
+
+        /* Changelog Styles */
+        #changelog-popup {
+            display: block; /* Show when page loads */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            width: 50%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .changelog-content h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .changelog-content ul {
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .changelog-content li {
+            margin-bottom: 10px;
+        }
+
+        .changelog-content button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .changelog-content button:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected automatically, <a href="https://odbit.org">click here</a>.</p>
+    <div class="banner">
+        This is an official ODBIT related element.
+    </div>
+
+    <div class="header">
+        <h1>ODBIT - Online Dater Bureau of Investigation Team</h1>
+    </div>
+
+    <div class="navbar">
+        <a href="https://odbit.org">Home</a>
+        <a href="https://odbit.org/sign-in">Sign In</a>
+        <a href="https://odbit.org/status">Status</a>
+        <a href="https://odbit.org/tos">ToS</a>
+        <a href="https://odbit.org/linksforuseodbit">Social</a>
+        <a href="https://odbit.org/newspage">News</a>
+    </div>
+
+    <div class="content">
+        <div class="about-text">
+            <h2>About ODBIT</h2>
+            <p>ODBIT (Online Dater Bureau of Investigation Team) is a dedicated organization within the ROBLOX community, committed to identifying and reporting individuals who violate both ROBLOX’s Terms of Service and real-world laws. Our primary mission is to create a safer online environment by taking action against serious offenders, including pedophiles, sex offenders, and individuals engaging in predatory behavior.</p>
+            <p>As an active force within the ROBLOX platform, ODBIT members work diligently to monitor, investigate, and report any violations to the appropriate authorities, whether that be ROBLOX moderators or legal entities when necessary. While ROBLOX is our primary focus, our efforts may extend to other online platforms where such harmful activities occur.</p>
+            <p>Founded by Evan Sakers and co-founded by Jero, ODBIT operates as a team of highly dedicated individuals who share a common goal: protecting the safety and integrity of the online gaming community. Due to privacy concerns, other co-founders and key members will not be publicly disclosed.</p>
+            <p>At ODBIT, we believe in the importance of vigilance and community awareness. By working together, we strive to create a gaming space where all users, especially minors, can interact without fear of exploitation or harm. Our mission is ongoing, and we remain steadfast in our pursuit of justice within the digital world.</p>
+            <p>ODBIT’s efforts also extend to educating the community about online safety and helping users recognize the signs of predatory behavior. We aim to empower the ROBLOX community to protect themselves and others from potential harm.</p>
+            <p>We believe that working together as a community is crucial to creating a safer online space for everyone. The members of ODBIT continue to dedicate their time and resources to this cause, ensuring that the online environment is safe, secure, and enjoyable for all users, regardless of age or background.</p>
+            <p>As our mission grows, we continue to build relationships with various online platforms to promote a safer environment for users worldwide. We understand that online safety is an ongoing concern, and we strive to stay ahead of potential threats by constantly evolving our strategies and technologies.</p>
+            <p>Our community of volunteers is one of our greatest assets. These members contribute their time, knowledge, and skills to further our cause, ensuring that no stone is left unturned in the fight against online predators. Our dedication to this mission has been a driving force behind the growth and success of ODBIT.</p>
+            <p>In addition to investigating harmful online behavior, we also strive to foster a positive and supportive environment within the ROBLOX community. We encourage players to report any suspicious activity, share safety tips, and provide support to those who may have experienced or witnessed harmful behavior.</p>
+            <p>While our focus will always be on protecting users from dangerous individuals, we also strive to make sure that everyone feels safe while enjoying their time in the online gaming world. This commitment to safety, alongside our ongoing investigations and reports, is what sets ODBIT apart in the fight against online exploitation.</p>
+            <p>Thank you for supporting ODBIT. Together, we can create a safer, more enjoyable online experience for everyone. We invite you to join us in our mission to protect users and ensure the integrity of the ROBLOX platform.</p>
+            <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="error-popup">
+        <p>Servers have been temporarily shut down to make things better. Please try again later<br> 
+        <span id="error-code">400</span> error code 0_x00400<br>400 Bad Request</p>
+    </div>
+
+    <!-- Changelog Popup -->
+    <div id="changelog-popup">
+        <div class="changelog-content">
+            <h2>Changelog v1.25.0.01 Release</h2>
+            <ul>
+                <li><strong>Updated Status Page 📜:</strong> The status page has been updated so that the new status page actually works, and when an error is detected, it will display the output status, allowing automation and making things easier for Web Dev Staff (WDS). <a href="https://odbit.org/status" target="_blank">View Status Page</a></li>
+                <li><strong>Backend Servers Coming Soon 🔐:</strong> ODBIT will have a more secure way of entering sensitive info when logging into the dashboard. We will continue to work on using Supabase to help out on our servers to authenticate easier.</li>
+                <li><strong>Site Back Up 🛜:</strong> The site was temporarily down due to sensitive information possibly being shown on our website. The site is back up and functioning properly, with no detected errors. If there are any errors, go to <a href="https://odbit.org/tip" target="_blank">Submit a Tip</a> or check the <a href="https://odbit.org/status" target="_blank">Status Page</a>.</li>
+                <li><strong>New Cat1 Dispatch System 📞:<strong> ODBIT has announced a new cat1 dispatch system strictly for dispatchers. You can only access the site using a special cookie, which only one person has per cookie. Want access? Request an account, or contact a manager to get hired. </strong></strong></li>
+            </ul>
+            <div>
+                <input type="checkbox" id="dont-show-again" />
+                <label for="dont-show-again">Don't show again</label>
+            </div>
+            <button onclick="closeChangelog()">Close</button>
+        </div>
+    </div>
+
+    <div id="cookie-banner">
+        <img src="https://i.imgur.com/vCRNCJ3.png" alt="Cookie Icon">
+        <div class="cookie-text">PLEASE ACCEPT OUR COOKIES!!!</div>
+        <div>
+            <input type="checkbox" id="dont-show-again" />
+            <label for="dont-show-again">Don't show again</label>
+        </div>
+        <div class="cookie-buttons">
+            <button onclick="hideCookieBanner()">Accept</button>
+            <button onclick="hideCookieBanner()">Only needed cookies</button>
+        </div>
+    </div>
+
+    <script>
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // Set expiration time
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/"; // Set the cookie
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function hideCookieBanner() {
+            const cookieBanner = document.getElementById("cookie-banner");
+            const dontShowAgain = document.getElementById("dont-show-again");
+            
+            // Set the cookie to indicate that the user has accepted cookies
+            if (dontShowAgain.checked) {
+                setCookie("acceptedCookies", "true", 365 * 100); // Set cookie for 100 years if checked
+            } else {
+                setCookie("acceptedCookies", "true", 365); // Set cookie for 1 year if not checked
+            }
+
+            cookieBanner.style.display = "none"; // Hide the cookie banner
+        }
+
+        function checkCookieConsent() {
+            if (!getCookie("acceptedCookies")) {
+                document.getElementById("cookie-banner").style.display = "block"; // Show the cookie banner if not accepted
+            } else {
+                document.getElementById("cookie-banner").style.display = "none"; // Hide the banner if already accepted
+            }
+        }
+
+        function showErrorPopup() {
+            document.getElementById("overlay").style.display = "block"; // Show overlay
+            document.getElementById("error-popup").style.display = "block"; // Show error pop-up
+        }
+
+        function closeChangelog() {
+            if (document.getElementById("dont-show-again").checked) {
+                setCookie("changelogShown", "true", 365); // Set cookie for 1 year
+            }
+            document.getElementById("changelog-popup").style.display = "none";
+        }
+
+        // Check if the changelog has been shown before
+        window.onload = function() {
+            checkCookieConsent();
+            if (getCookie("changelogShown") === "true") {
+                document.getElementById("changelog-popup").style.display = "none"; // Hide if already shown
+            } else {
+                document.getElementById("changelog-popup").style.display = "block"; // Show if not shown
+            }
+            const startTime = Date.now();  // Record the start time
+        };
+
+
+    </script>
 </body>
 </html>

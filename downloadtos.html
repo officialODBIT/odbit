@@ -14,9 +14,10 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // instantly redirect
-        window.location.href = "https://odbit.org";
+                // redirect after a short delay
+        setTimeout(() => {
+            window.location.href = "https://odbit.org";
+        }, 5000); // 2-second delay so download 
     </script>
 </body>
 </html>

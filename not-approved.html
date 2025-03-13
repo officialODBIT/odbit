@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Suspended</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            background-color: #2d2d2d;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff4747; /* Red like Roblox */
+        }
+
+        p {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #ff4747;
+            color: white;
+            font-size: 1rem;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #e63946;
+            transform: scale(1.05);
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Account Suspended</h1>
+        <p>Your account has been suspended due to a violation of our community guidelines. If you believe this was an error, please contact support.</p>
+        <button onclick="window.location.href='https://support.roblox.com/'">Contact Support</button>
+    </div>
+
+    <script>
+        // Optional: You can add additional functionality with JS if needed, like a timed redirect or extra animations
+        window.onload = () => {
+            console.log("Account suspended page loaded.");
+        };
+    </script>
+
+</body>
+</html>

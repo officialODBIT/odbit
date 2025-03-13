@@ -7,17 +7,18 @@
 </head>
 <body>
     <script>
-        // trigger file download
+        // create a hidden link element
         let link = document.createElement("a");
         link.href = "odbittos.pdf"; // make sure this file exists in your repo
-        link.download = "odbittos.pdf";
+        link.download = "ODBIT--TOS.pdf"; 
         document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-                // redirect after a short delay
+        link.click(); // trigger download
+        document.body.removeChild(link); // clean up
+
+        // redirect after a short delay
         setTimeout(() => {
-            window.location.href = "https://odbit.org";
-        }, 5000); // 2-second delay so download 
+            window.location.href = "odbit.org";
+        }, 2000); // 2-second delay so download can start
     </script>
 </body>
 </html>

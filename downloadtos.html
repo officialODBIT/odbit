@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading...</title>
+</head>
+<body>
+    <script>
+        // trigger file download
+        let link = document.createElement("a");
+        link.href = "odbittos.pdf"; // make sure this file exists in your repo
+        link.download = "odbittos.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // instantly redirect
+        window.location.href = "https://odbit.org/resources/";
+    </script>
+</body>
+</html>

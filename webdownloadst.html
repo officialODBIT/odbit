@@ -1,1 +1,25 @@
+<!-- This is for use of PO (Phone Operators) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading...</title>
+</head>
+<body>
+    <script>
+        // create a hidden link element
+        let link = document.createElement("a");
+        link.href = "960-VEED.mp3"; // make sure this file exists in your repo
+        link.download = "morseringtone.mp3"; 
+        document.body.appendChild(link);
+        link.click(); // trigger download
+        document.body.removeChild(link); // clean up
 
+        // redirect after a short delay
+        setTimeout(() => {
+            window.location.href = "odbit.org";
+        }, 2000); // 2-second delay so download can start
+    </script>
+</body>
+</html>

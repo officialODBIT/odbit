@@ -1,307 +1,318 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
+<html lang="en">
+<head>
   <link rel="icon" href="odbitlogo25.png" type="image/x-icon">
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>ODBIT - Sign In</title>
-     <style>
-         body {
-             font-family: Arial, sans-serif;
-             background-color: #f1f1f1;
-             margin: 0;
-             padding: 0;
-         }
- 
-         /* Top Banner */
-         .banner {
-             background-color: #003366;
-             color: white;
-             text-align: center;
-             padding: 10px 0;
-             font-size: 18px;
-             font-weight: bold;
-             width: 100%;
-             box-sizing: border-box;
-         }
- 
-         /* Header */
-         .header {
-             background-color: #001a33;
-             color: white;
-             padding: 20px;
-             text-align: center;
-         }
- 
-         .header h1 {
-             margin: 0;
-             font-size: 40px;
-         }
- 
-         /* Navbar */
-         .navbar {
-             background-color: #001a33;
-             overflow: hidden;
-         }
- 
-         .navbar a {
-             color: white;
-             text-align: center;
-             padding: 14px 20px;
-             text-decoration: none;
-             display: inline-block;
-             font-size: 18px;
-         }
- 
-         .navbar a:hover {
-             background-color: #ddd;
-             color: black;
-         }
- 
-         /* Form Container */
-         .form-container {
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             height: 100vh;
-             padding: 20px;
-         }
- 
-         .form-content {
-             background-color: #fff;
-             padding: 20px;
-             border-radius: 8px;
-             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-             width: 400px;
-             text-align: center;
-         }
- 
-         h2 {
-             margin-bottom: 20px;
-             font-size: 24px;
-             color: #003366;
-         }
- 
-         label {
-             display: block;
-             text-align: left;
-             font-weight: bold;
-             margin-top: 10px;
-         }
- 
-         input[type="text"], input[type="password"] {
-             width: 100%;
-             padding: 10px;
-             margin-top: 5px;
-             border: 1px solid #ccc;
-             border-radius: 4px;
-             font-size: 16px;
-         }
- 
-         .show-text {
-             display: flex;
-             align-items: center;
-             margin-top: 5px;
-         }
- 
-         .show-text input {
-             margin-right: 5px;
-         }
- 
-         .submit-btn, .request-account {
-             width: 100%;
-             padding: 12px;
-             margin-top: 10px;
-             border: none;
-             font-size: 16px;
-             cursor: pointer;
-             border-radius: 4px;
-         }
- 
-         .submit-btn {
-             background-color: #050d57;
-             color: white;
-         }
- 
-         .request-account {
-             background-color: #050d57;
-             color: white;
-         }
- 
-         /* Popup */
-         .popup, .message-popup, .error-popup, .success-popup {
-             display: none;
-             position: fixed;
-             top: 50%;
-             left: 50%;
-             transform: translate(-50%, -50%);
-             width: 300px;
-             padding: 20px;
-             background-color: #f8f8f8;
-             border: 2px solid #000;
-             border-radius: 5px;
-             text-align: center;
-             z-index: 100;
-         }
- 
-         .popup button, .message-popup button, .error-popup button, .success-popup button {
-             background-color: #FF0000;
-             color: white;
-             padding: 10px;
-             border: none;
-             border-radius: 4px;
-             cursor: pointer;
-         }
- 
-         .archive-link {
-             color: #001a33;
-             text-decoration: none;
-             font-weight: bold;
-         }
- 
-         .archive-link:hover {
-             color: #ffcc00;
-         }
-     </style>
- </head>
- <body>
- 
-     <div class="banner">
-         Official ODBIT Sign-In Portal
-     </div>
- 
-     <div class="header">
-         <h1>ODBIT - Sign In</h1>
-     </div>
- 
-     <div class="navbar">
-         <a href="https://www.odbit.org/home">Home</a>
-         <a href="https://www.odbit.org/status">Status</a>
-         <a href="https://www.odbit.org/tos">ToS</a>
-         <a href="https://www.odbit.org/linksforuseodbit">Social</a>
-     </div>
- 
-     <div class="form-container">
-         <div class="form-content">
-             <h2>Sign In</h2>
-             <form id="sign-in-form">
-                 <label for="specID">SpecID <span style="color: red;">*</span></label>
-                 <input type="text" id="specID" name="specID" required>
- 
-                 <label for="pin">PIN <span style="color: red;">*</span></label>
-                 <input type="password" id="pin" name="pin" required>
- 
-                 <div class="show-text">
-                     <input type="checkbox" id="show-password" onclick="togglePassword()"> <label for="show-password">Show Text</label>
-                 </div>
- 
-                 <button type="submit" class="submit-btn">Sign in</button>
-                 <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
-             </form>
-             <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
-             <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
-         </div>
-     </div>
- 
-     <div class="popup" id="popup">
-         <p>Incorrect or not added to system</p>
-         <button onclick="closePopup()">OK</button>
-     </div>
- 
-     <div class="message-popup" id="message-popup">
-         <p>No ongoing investigations</p>
-         <p>No ongoing cases</p>
-         <button onclick="closeMessagePopup()">Close</button>
-     </div>
- 
-     <div class="error-popup" id="error-popup">
-         <p>Error 63 <br> 0_xx0002</p>
-         <p>Please try again later.</p>
-         <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
-         <button onclick="closeErrorPopup()">Close</button>
-     </div>
- 
-     <div class="success-popup" id="success-popup">
-    <p>Info: This is a successful login attempt. Your session will last until closed or refreshed.</p>
-    <p>Cases ongoing: (0)</p>
-    <br><br>
-      <p>Invesitgations ongoing (1)</p>
-<p>
-    <a href="https://www.odbit.org/5196end90" style="color: #001a33; text-decoration: none; font-weight: bold;">
-        519648846290 -- March 8th
-    </a>
-</p>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODBIT - Sign In</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f1f1f1;
+          margin: 0;
+          padding: 0;
+      }
 
+      /* Top Banner */
+      .banner {
+          background-color: #003366;
+          color: white;
+          text-align: center;
+          padding: 10px 0;
+          font-size: 18px;
+          font-weight: bold;
+          width: 100%;
+          box-sizing: border-box;
+      }
 
-    <br><br>
-    <p>History: (43)</p>
-    <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
-    <button onclick="closeSuccessPopup()">Close</button>
-</div>
+      /* Header */
+      .header {
+          background-color: #001a33;
+          color: white;
+          padding: 20px;
+          text-align: center;
+      }
 
- 
-     <script>
+      .header h1 {
+          margin: 0;
+          font-size: 40px;
+      }
+
+      /* Navbar */
+      .navbar {
+          background-color: #001a33;
+          overflow: hidden;
+      }
+
+      .navbar a {
+          color: white;
+          text-align: center;
+          padding: 14px 20px;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 18px;
+      }
+
+      .navbar a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+
+      /* Form Container */
+      .form-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          padding: 20px;
+      }
+
+      .form-content {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 400px;
+          text-align: center;
+      }
+
+      h2 {
+          margin-bottom: 20px;
+          font-size: 24px;
+          color: #003366;
+      }
+
+      label {
+          display: block;
+          text-align: left;
+          font-weight: bold;
+          margin-top: 10px;
+      }
+
+      input[type="text"], input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 16px;
+      }
+
+      .show-text {
+          display: flex;
+          align-items: center;
+          margin-top: 5px;
+      }
+
+      .show-text input {
+          margin-right: 5px;
+      }
+
+      .submit-btn, .request-account {
+          width: 100%;
+          padding: 12px;
+          margin-top: 10px;
+          border: none;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 4px;
+      }
+
+      .submit-btn {
+          background-color: #050d57;
+          color: white;
+      }
+
+      .request-account {
+          background-color: #050d57;
+          color: white;
+      }
+
+      /* Popup */
+      .popup, .message-popup, .error-popup, .success-popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 300px;
+          padding: 20px;
+          background-color: #f8f8f8;
+          border: 2px solid #000;
+          border-radius: 5px;
+          text-align: center;
+          z-index: 100;
+      }
+
+      .popup button, .message-popup button, .error-popup button, .success-popup button {
+          background-color: #FF0000;
+          color: white;
+          padding: 10px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      .archive-link {
+          color: #001a33;
+          text-decoration: none;
+          font-weight: bold;
+      }
+
+      .archive-link:hover {
+          color: #ffcc00;
+      }
+
+      /* New link style */
+      .redirect-link {
+          display: none;
+          margin-top: 20px;
+      }
+
+      .redirect-link a {
+          color: #001a33;
+          font-weight: bold;
+          text-decoration: none;
+      }
+
+      .redirect-link a:hover {
+          color: #ffcc00;
+      }
+  </style>
+</head>
+<body>
+
+  <div class="banner">
+      Official ODBIT Sign-In Portal
+  </div>
+
+  <div class="header">
+      <h1>ODBIT - Sign In</h1>
+  </div>
+
+  <div class="navbar">
+      <a href="https://www.odbit.org/home">Home</a>
+      <a href="https://www.odbit.org/status">Status</a>
+      <a href="https://www.odbit.org/tos">ToS</a>
+      <a href="https://www.odbit.org/linksforuseodbit">Social</a>
+  </div>
+
+  <div class="form-container">
+      <div class="form-content">
+          <h2>Sign In</h2>
+          <form id="sign-in-form">
+              <label for="specID">SpecID <span style="color: red;">*</span></label>
+              <input type="text" id="specID" name="specID" required>
+
+              <label for="pin">PIN <span style="color: red;">*</span></label>
+              <input type="password" id="pin" name="pin" required>
+
+              <div class="show-text">
+                  <input type="checkbox" id="show-password" onclick="togglePassword()"> <label for="show-password">Show Text</label>
+              </div>
+
+              <button type="submit" class="submit-btn">Sign in</button>
+              <button type="button" class="request-account" onclick="requestAccount()">Request an Account</button>
+          </form>
+          <p style="margin-top: 20px; font-size: 16px; color: #003366;">v1.25.0.01 Beta Release</p>
+          <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+      </div>
+  </div>
+
+  <div class="popup" id="popup">
+      <p>Incorrect or not added to system</p>
+      <button onclick="closePopup()">OK</button>
+  </div>
+
+  <div class="message-popup" id="message-popup">
+      <p>No ongoing investigations</p>
+      <p>No ongoing cases</p>
+      <button onclick="closeMessagePopup()">Close</button>
+  </div>
+
+  <div class="error-popup" id="error-popup">
+      <p>Error 63 <br> 0_xx0002</p>
+      <p>Please try again later.</p>
+      <p>ODBIT &copy; 2025-2026. All rights reserved.</p>
+      <button onclick="closeErrorPopup()">Close</button>
+  </div>
+
+  <div class="success-popup" id="success-popup">
+      <p>Info: This is a successful login attempt. Your session will last until closed or refreshed.</p>
+      <p>Cases ongoing: (0)</p>
+      <br><br>
+      <p>Investigations ongoing (1)</p>
+      <p><a href="https://www.odbit.org/5196end90" style="color: #001a33; text-decoration: none; font-weight: bold;">519648846290 -- March 8th</a></p>
+      <br><br>
+      <p>History: (43)</p>
+      <p><a href="https://www.odbit.org/403forbidden" class="archive-link">Archive</a></p>
+      <button onclick="closeSuccessPopup()">Close</button>
+      <!-- New redirect link -->
+      <div class="redirect-link" id="redirect-link">
+          <p><a href="https://www.odbit.org/redirectemail" target="_blank">Go to Redirect Email</a></p>
+      </div>
+  </div>
+
+  <script>
       document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-    alert('right-clicking is disabled 💀');
-});
+          event.preventDefault();
+          alert('right-clicking is disabled 💀');
+      });
 
-         function showPopup(message) {
-             var popup = document.getElementById('popup');
-             popup.querySelector('p').textContent = message;
-             popup.style.display = 'block';
-         }
- 
-         function closePopup() {
-             document.getElementById('popup').style.display = 'none';
-         }
- 
-         document.getElementById('sign-in-form').addEventListener('submit', function(event) {
-             event.preventDefault();
- 
-             var specID = document.getElementById('specID').value;
-             var pin = document.getElementById('pin').value;
- 
-             // Check for the correct SpecID and PIN pairs
-             if ((specID === "495739672935" && pin === "6882") || 
-                 (specID === "495629572819" && pin === "1396") ||
-                 (specID === "495838492486" && pin === "19938") ||
-                 (specID === "4925537503891" && pin === "13395")) {
-                 
-                 // Change the archive link based on the length of the PIN
-                 var archiveLink = document.querySelector('.archive-link');
-                 if (pin.length === 5) {
-                     archiveLink.href = "https://www.odbit.org/archives"; // URL for 5-digit PIN
-                 } else {
-                     archiveLink.href = "https://www.odbit.org/403forbidden"; // URL for 4-digit PIN
-                 }
-                 
-                 document.getElementById('success-popup').style.display = 'block';
-             } else {
-                 showPopup("Incorrect or not added to system");
-             }
-         });
- 
-         function closeMessagePopup() {
-             document.getElementById('message-popup').style.display = 'none';
-         }
- 
-         function requestAccount() {
-             document.getElementById('error-popup').style.display = 'block';
-         }
- 
-         function closeErrorPopup() {
-             document.getElementById('error-popup').style.display = 'none';
-         }
- 
-         function closeSuccessPopup() {
-             document.getElementById('success-popup').style.display = 'none';
-         }
- 
-         function togglePassword() {
-             var pinInput = document.getElementById("pin");
-             pinInput.type = pinInput.type === "password" ? "text" : "password";
-         }
-     </script>
- </body>
- </html>
+      function showPopup(message) {
+          var popup = document.getElementById('popup');
+          popup.querySelector('p').textContent = message;
+          popup.style.display = 'block';
+      }
+
+      function closePopup() {
+          document.getElementById('popup').style.display = 'none';
+      }
+
+      document.getElementById('sign-in-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          var specID = document.getElementById('specID').value;
+          var pin = document.getElementById('pin').value;
+
+          // Check for the correct SpecID and PIN pairs
+          if ((specID === "495739672935" && pin === "6882") || 
+              (specID === "495629572819" && pin === "1396") ||
+              (specID === "495838492486" && pin === "19938") ||
+              (specID === "4925537503891" && pin === "13395")) {
+
+              // Show success popup
+              document.getElementById('success-popup').style.display = 'block';
+
+              // Display the redirect link
+              document.getElementById('redirect-link').style.display = 'block';
+
+          } else {
+              showPopup("Incorrect or not added to system");
+          }
+      });
+
+      function closeMessagePopup() {
+          document.getElementById('message-popup').style.display = 'none';
+      }
+
+      function requestAccount() {
+          document.getElementById('error-popup').style.display = 'block';
+      }
+
+      function closeErrorPopup() {
+          document.getElementById('error-popup').style.display = 'none';
+      }
+
+      function closeSuccessPopup() {
+          document.getElementById('success-popup').style.display = 'none';
+          document.getElementById('redirect-link').style.display = 'none'; // Hide the link when closing
+      }
+
+      function togglePassword() {
+          var pinInput = document.getElementById("pin");
+          pinInput.type = pinInput.type === "password" ? "text" : "password";
+      }
+  </script>
+</body>
+</html>

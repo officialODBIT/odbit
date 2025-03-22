@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blacklisted</title>
+    <title>Warning</title>
     <style>
         body {
             background-color: white;
@@ -27,15 +27,74 @@
         }
         .red {
             color: red;
+            font-weight: bold;
+        }
+        .countdown {
+            margin-top: 10px;
+            font-size: 16px;
         }
     </style>
+    <script>
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function startCountdown() {
+            let expiration = getCookie("blacklist_expiration");
+            if (!expiration) {
+                let now = new Date();
+                now.setDate(now.getDate() + (7 * 7)); // 7 weeks
+                setCookie("blacklist_expiration", now.getTime(), 49);
+                expiration = now.getTime();
+            }
+
+            function updateCountdown() {
+                let now = new Date().getTime();
+                let timeLeft = expiration - now;
+
+                if (timeLeft <= 0) {
+                    document.querySelector(".countdown").innerHTML = "Your blacklist period has expired.";
+                    return;
+                }
+
+                let weeks = Math.floor(timeLeft / (1000 * 60 * 60 * 24 * 7));
+                let days = Math.floor((timeLeft % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.querySelector(".countdown").innerHTML = `Time remaining: ${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+    </script>
 </head>
-<body>
+<body onload="startCountdown()">
     <img src="odbitlogo25.png" alt="Logo" class="logo">
     <div class="message">
         Due to unusual behaviors or inappropriate content, you have been 
-        <span class="red" style="font-weight: bold; ">blacklisted</span> temporarily. Contact contact@odbit.org to appeal your ban, or wait it off. You will have a second chance.<br>
-       <span class="red" style="font-weight: bold; "> You have been warned.</span>
+        <span class="red">blacklisted</span> temporarily. Contact <a href="mailto:contact@odbit.org">contact@odbit.org</a> to appeal your ban, or wait it off. You will have a second chance.<br>
+        <span class="red">You have been warned.</span>
     </div>
+    <div class="countdown"></div>
 </body>
 </html>
